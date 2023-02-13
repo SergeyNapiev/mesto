@@ -1,7 +1,7 @@
 .profile__edit-button {
     width: 24px;
     height: 24px;
-    background-color: #000000;
+    background-color: transparent;
     background-image: url(../../../images/Edit-button10x10.svg);
     background-repeat: no-repeat;
     background-size: auto;
@@ -23,7 +23,7 @@
     .profile__edit-button {
         width: 18px;
         height: 18px;
-        background-image: url(../../../images/Edit-button7x7.svg);
+        background-size: 7px 7px;
         margin-left: 10px;
     }
 }

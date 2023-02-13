@@ -1,37 +1,36 @@
 const editButton = document.querySelector('.profile__edit-button');
-const popup = document.querySelector('.popup');
-const closeButton = popup.querySelector('.popup__close');
-const editNamePopup = document.querySelector('.popup__name');
-const editNameProfile = document.querySelector('.profile__name');
-const editAboutProfile = document.querySelector('.profile__about');
-const editAboutPopup = document.querySelector('.popup__about');
-const submitButton = document.querySelector('.popup__save');
+const popup = document.querySelector('.popup'); 
+const closeButton = document.querySelector('.popup__close');
 
-const toggleOpenPopup = () => {
-    popup.classList.toggle('popup_opened')
+const formElement = document.querySelector('.popup__form');
+const nameInput = formElement.querySelector('#name');
+const jobInput = formElement.querySelector('#about');
+const nameProfile = document.querySelector('.profile__name');
+const aboutProfile = document.querySelector('.profile__about');
+
+function popupOpen () {
+    popup.classList.add('popup_opened');
 }
 
-function saveClose (closing) {
-    if (closing.target === closing.currentTarget)
-    toggleOpenPopup ();
+function popupClose () {
+    popup.classList.remove('popup_opened');
 }
 
-const handleEditButtonClick = () => {
-    toggleOpenPopup ();
+function handleFormOpen () {
+    nameInput.value = nameProfile.textContent;
+    jobInput.value = aboutProfile.textContent;
+    popupOpen();
 }
 
-editButton.addEventListener('click', handleEditButtonClick);
-closeButton.addEventListener('click', saveClose);
-popup.addEventListener('click', saveClose);
-
-function newInfo () {
-    editNameProfile.textContent = editNamePopup.value;
-    editAboutProfile.textContent = editAboutPopup.value;
+function handleFormSubmit (evt) {
+    evt.preventDefault();
+    nameInput.getAttribute('value');
+    jobInput.getAttribute('value');
+    nameProfile.textContent = nameInput.value;
+    aboutProfile.textContent = jobInput.value;
+    popupClose();
 }
 
-submitButton.addEventListener ('click', (event) => {
-    event.preventDefault();
-    console.log(event);
-    newInfo ();
-    saveClose (submitButton);
-});
+editButton.addEventListener('click', handleFormOpen);
+closeButton.addEventListener('click', popupClose);
+formElement.addEventListener('submit', handleFormSubmit); 

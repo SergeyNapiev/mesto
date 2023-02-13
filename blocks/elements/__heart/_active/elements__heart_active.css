@@ -1,16 +1,11 @@
-.elements__heart {
+.elements__headt_active {
     width: 22px;
     height: 19px;
-    background-image: url(../../../images/heart.svg);
+    background-image: url(../../../images/heart-active.svg);
     background-repeat: no-repeat;
     background-size: contain;
     background-color: transparent;
     border: 0;
     margin-right: 5px;
     display: flex;
-}
-
-.elements__heart:hover {
-    opacity: 0.5;
-    cursor: pointer;
 }
