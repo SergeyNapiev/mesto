@@ -8,6 +8,7 @@
     border: 0;
     margin-right: 5px;
     display: flex;
+    flex-shrink: 0;
 }
 
 .elements__heart:hover {
