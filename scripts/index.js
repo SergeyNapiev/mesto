@@ -35,19 +35,12 @@ const editHeading = popupAdd.querySelector('.popup__heading');
 const createButton = popupAdd.querySelector('.popup__save');
 const closeAddButton = popupAdd.querySelector('.popup__close');
 
-const formElement = document.querySelector('.popup__form');
-const nameInput = formElement.querySelector('#name');
-const jobInput = formElement.querySelector('#about');
+const editFormElement = document.getElementById('edit-info');
+const nameInput = editFormElement.querySelector('#name');
+const jobInput = editFormElement.querySelector('#about');
 const nameProfile = document.querySelector('.profile__name');
 const aboutProfile = document.querySelector('.profile__about');
 
-const like = document.querySelector('.elements__heart');
-
-
-function toggleLike () {
-    like.classList.toggle('elements__heart');
-    like.classList.toggle('elements__heart_active');
-}
 
 function popupOpenEdit () {
     popupEdit.style.animation = 'fadeIn 1s';
@@ -90,19 +83,63 @@ function handleEditFormSubmit (evt) {
 
 function handleAddFormOpen () {
     editHeading.textContent = 'Новое место';
-    nameInput.value = '';
-    jobInput.value = '';
-    nameInput.setAttribute('placeholder', 'Название');
-    jobInput.setAttribute('placeholder', 'Ссылка на картинку');
+    titleInput.value = '';
+    urlInput.value = '';
+    titleInput.setAttribute('placeholder', 'Название');
+    urlInput.setAttribute('placeholder', 'Ссылка на картинку');
     createButton.textContent = 'Создать';
     popupOpenAdd();
 }
+//создание карточек
+const elementsListWrapper = document.querySelector('.elements');
+const element = document.querySelector('.elements__element');
+const template = document.getElementById('element');
+const namePlace = template.querySelector('.elements__title');
+const urlPlace = template.querySelector('.elements__item');
 
+const getElement = (element) => {
+  const newElement = template.content.cloneNode(true);
+  const newElementTitile = newElement.querySelector('.elements__title');
+  const newElementPhoto = newElement.querySelector('.elements__item');
+  newElementTitile.textContent = element.name;
+  newElementPhoto.src = element.link;
+  return newElement;
+}
 
+//для новых карточек  
+const getNewElement = () => {
+  const newElement = template.content.cloneNode(true);
+  const newElementTitile = newElement.querySelector('.elements__title');
+  const newElementPhoto = newElement.querySelector('.elements__item');
+  newElementTitile.textContent = titleInput.value;
+  newElementPhoto.src = urlInput.value;
+  return newElement;
+}
+
+const renderElement = (wrap, element) => {
+  wrap.prepend(getElement(element));
+}
+
+const renderNewElement = (wrap, element) => { //для новых
+  wrap.prepend(getNewElement(element));
+}
+
+initialCards.forEach((element) => {
+  renderElement(elementsListWrapper, element);
+})
+
+const addFormElement = document.getElementById('add-place');
+const titleInput = popupAdd.querySelector('.popup__input_text_name');
+const urlInput = popupAdd.querySelector('.popup__input_text_about');
+
+addFormElement.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  renderNewElement(elementsListWrapper);
+  popupCloseAdd();
+})
 
 editButton.addEventListener('click', handleFormOpenEdit);
 closeEditButton.addEventListener('click', popupCloseEdit);
-formElement.addEventListener('submit', handleEditFormSubmit);
-like.addEventListener('click', toggleLike);
+editFormElement.addEventListener('submit', handleEditFormSubmit);
 addButton.addEventListener('click', handleAddFormOpen);
 closeAddButton.addEventListener('click', popupCloseAdd);
