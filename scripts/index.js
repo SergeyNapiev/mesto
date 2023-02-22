@@ -101,6 +101,23 @@ const getElement = (element) => {
   const newElement = template.content.cloneNode(true);
   const newElementTitile = newElement.querySelector('.elements__title');
   const newElementPhoto = newElement.querySelector('.elements__item');
+    //удаление
+  const removeButton = newElement.querySelector('.elements__delete');
+
+  function handleRemoveButton () {
+    removeButton.closest('.elements__element').remove();
+  }
+  
+  removeButton.addEventListener('click', handleRemoveButton);
+  //лайк
+  const likeButton = newElement.querySelector('.elements__heart');
+  
+  function toggleLike () {
+      likeButton.classList.toggle('elements__heart');
+      likeButton.classList.toggle('elements__heart_active');
+  }
+    likeButton.addEventListener('click', toggleLike);
+  
   newElementTitile.textContent = element.name;
   newElementPhoto.src = element.link;
   return newElement;
@@ -111,6 +128,24 @@ const getNewElement = () => {
   const newElement = template.content.cloneNode(true);
   const newElementTitile = newElement.querySelector('.elements__title');
   const newElementPhoto = newElement.querySelector('.elements__item');
+  //удаление
+  const removeButton = newElement.querySelector('.elements__delete');
+
+  function handleRemoveButton () {
+    removeButton.closest('.elements__element').remove();
+  }
+
+  removeButton.addEventListener('click', handleRemoveButton);
+
+  //лайк
+  const likeButton = newElement.querySelector('.elements__heart');
+  
+  function toggleLike () {
+    likeButton.classList.toggle('elements__heart');
+    likeButton.classList.toggle('elements__heart_active');
+}
+  likeButton.addEventListener('click', toggleLike);
+
   newElementTitile.textContent = titleInput.value;
   newElementPhoto.src = urlInput.value;
   return newElement;
@@ -137,6 +172,7 @@ addFormElement.addEventListener('submit', (evt) => {
   renderNewElement(elementsListWrapper);
   popupCloseAdd();
 })
+
 
 editButton.addEventListener('click', handleFormOpenEdit);
 closeEditButton.addEventListener('click', popupCloseEdit);
