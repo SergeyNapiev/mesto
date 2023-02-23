@@ -42,6 +42,17 @@ const nameProfile = document.querySelector('.profile__name');
 const aboutProfile = document.querySelector('.profile__about');
 const popupPhoto = document.getElementById('photo');
 
+const closePhotoButton = document.querySelector('.popup-photo__close');
+const elementsListWrapper = document.querySelector('.elements');
+const element = document.querySelector('.elements__element');
+const template = document.getElementById('element');
+const namePlace = template.querySelector('.elements__title');
+const urlPlace = template.querySelector('.elements__item');
+
+const addFormElement = document.getElementById('add-place');
+const titleInput = popupAdd.querySelector('.popup__input_text_name');
+const urlInput = popupAdd.querySelector('.popup__input_text_about');
+
 function popupOpenPhoto () {
   popupPhoto.style.animation = 'fadeIn 1s';
   popupPhoto.style.visibility = 'visible';
@@ -102,18 +113,14 @@ function handleAddFormOpen () {
     createButton.textContent = 'Создать';
     popupOpenAdd();
 }
-//создание карточек
-const elementsListWrapper = document.querySelector('.elements');
-const element = document.querySelector('.elements__element');
-const template = document.getElementById('element');
-const namePlace = template.querySelector('.elements__title');
-const urlPlace = template.querySelector('.elements__item');
 
+//создание карточек
 const getElement = (element) => {
   const newElement = template.content.cloneNode(true);
   const newElementTitile = newElement.querySelector('.elements__title');
   const newElementPhoto = newElement.querySelector('.elements__item');
-    //удаление
+
+  //удаление
   const removeButton = newElement.querySelector('.elements__delete');
 
   function handleRemoveButton () {
@@ -121,6 +128,7 @@ const getElement = (element) => {
   }
   
   removeButton.addEventListener('click', handleRemoveButton);
+
   //лайк
   const likeButton = newElement.querySelector('.elements__heart');
   
@@ -167,18 +175,11 @@ initialCards.forEach((element) => {
   renderElement(elementsListWrapper, element);
 })
 
-const addFormElement = document.getElementById('add-place');
-const titleInput = popupAdd.querySelector('.popup__input_text_name');
-const urlInput = popupAdd.querySelector('.popup__input_text_about');
-
 addFormElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
   renderElement(elementsListWrapper);
   popupCloseAdd();
 })
-
-const closePhotoButton = document.querySelector('.popup-photo__close');
-
 
 editButton.addEventListener('click', handleFormOpenEdit);
 closeEditButton.addEventListener('click', popupCloseEdit);
