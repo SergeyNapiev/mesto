@@ -1,18 +1,4 @@
 .elements__heart_active {
-    width: 22px;
-    height: 19px;
     background-image: url(../../../../images/heart-active.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: transparent;
-    border: 0;
-    margin-right: 5px;
-    display: flex;
-    flex-shrink: 0;
-    z-index: 1;
 }
 
-.elements__heart_active:hover {
-    opacity: 0.5;
-    cursor: pointer;
-}
