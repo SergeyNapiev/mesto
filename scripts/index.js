@@ -56,7 +56,7 @@ function handleOpenAddForm () {
 
 //создание карточек
 const getElement = (element) => {
-  const newElement = template.content.cloneNode(true);
+  const newElement = template.content.firstElementChild.cloneNode(true);
   const newElementTitile = newElement.querySelector('.elements__title');
   const newElementPhoto = newElement.querySelector('.elements__item');
 
