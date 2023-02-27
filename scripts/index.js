@@ -20,7 +20,7 @@ const aboutProfile = document.querySelector('.profile__about');
 
 const elementsListWrapper = document.querySelector('.elements');
 const element = document.querySelector('.elements__element');
-const template = document.querySelector('#element');
+const template = document.querySelector('#element').content;
 const namePlace = template.querySelector('.elements__title');
 const urlPlace = template.querySelector('.elements__item');
 
@@ -28,35 +28,35 @@ const addFormElement = document.querySelector('#add-place');
 const titleInput = popupAdd.querySelector('#place');
 const urlInput = popupAdd.querySelector('#url');
 
-function popupOpen (item) {
+function openPopup (item) {
   item.classList.add('popup_opened');
 }
 
-function popupClose (item) {
+function closePopup (item) {
   item.classList.remove('popup_opened');
 }
 
 function handleOpenEditForm () {
   nameInput.value = nameProfile.textContent;
   jobInput.value = aboutProfile.textContent;
-  popupOpen(popupEdit);
+  openPopup(popupEdit);
 }
 
 function handleEditFormSubmit (evt) {
   evt.preventDefault();
   nameProfile.textContent = nameInput.value;
   aboutProfile.textContent = jobInput.value;
-  popupClose(popupEdit);
+  closePopup(popupEdit);
 }
 
 function handleOpenAddForm () {
   addFormElement.reset();
-  popupOpen(popupAdd);
+  openPopup(popupAdd);
 }
 
 //создание карточек
 const getElement = (element) => {
-  const newElement = template.content.firstElementChild.cloneNode(true);
+  const newElement = template.querySelector('.elements__element').cloneNode(true);
   const newElementTitile = newElement.querySelector('.elements__title');
   const newElementPhoto = newElement.querySelector('.elements__item');
 
@@ -88,7 +88,7 @@ const getElement = (element) => {
         fullImage.src = newElementPhoto.src; 
         fullImageTitle.textContent = newElementTitile.textContent; 
         fullImage.setAttribute('alt', fullImageTitle.textContent); 
-        popupOpen(popupPhoto); 
+        openPopup(popupPhoto); 
         } 
   );
 
@@ -111,18 +111,18 @@ addFormElement.addEventListener('submit', (evt) => {
   }
   console.log(evt);
   renderElement(elementsListWrapper, newCard); 
-  popupClose(popupAdd); 
+  closePopup(popupAdd); 
 }) 
 
 editButton.addEventListener('click', handleOpenEditForm);
 closeEditButton.addEventListener('click', () => {
-  popupClose(popupEdit);
+  closePopup(popupEdit);
 });
 closeAddButton.addEventListener('click', () => {
-  popupClose(popupAdd);
+  closePopup(popupAdd);
 });
 closePhotoButton.addEventListener('click',() => {
-  popupClose(popupPhoto);
+  closePopup(popupPhoto);
 });
 editFormElement.addEventListener('submit', handleEditFormSubmit);
 addButton.addEventListener('click', handleOpenAddForm);
