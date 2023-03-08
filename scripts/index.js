@@ -7,7 +7,7 @@ const closeEditButton = popupEdit.querySelector('#close-edit');
 const closeAddButton = popupAdd.querySelector('#close-add');
 const closePhotoButton = popupPhoto.querySelector('#close-photo');
 const addButton = document.querySelector('.profile__add-button');
-const createButton = popupAdd.querySelector('.popup__save');
+
 
 const editHeading = popupAdd.querySelector('.popup__heading');
 
@@ -109,7 +109,6 @@ addFormElement.addEventListener('submit', (evt) => {
     name: titleInput.value,
     link: urlInput.value
   }
-  console.log(evt);
   renderElement(elementsListWrapper, newCard); 
   closePopup(popupAdd); 
 }) 
@@ -126,3 +125,54 @@ closePhotoButton.addEventListener('click',() => {
 });
 editFormElement.addEventListener('submit', handleEditFormSubmit);
 addButton.addEventListener('click', handleOpenAddForm);
+
+
+
+// для валидации
+
+const setEventListener = (form) => {
+  const buttonSubmitElement = form.querySelector('.popup__button');
+const inputs = Array.from(form.querySelectorAll('.popup__input'));
+
+inputs.forEach(inputSelector => {
+
+  inputSelector.addEventListener('input', () => {
+    const isValid = inputSelector.validity.valid;
+    const inputSectionElenemt = inputSelector.parentNode;
+    const errorElement = inputSectionElenemt.querySelector('.popup__error');
+    if (isValid) {
+      errorElement.textContent = '';
+      inputSelector.classList.remove('popup__input_type_error');
+      errorElement.classList.remove('popup__error_visible');
+    } else {
+      errorElement.textContent = inputSelector.validationMessage;
+      inputSelector.classList.add('popup__input_type_error');
+      errorElement.classList.add('popup__error_visible');
+    }
+
+    toggleButtonState(inputs, buttonSubmitElement);
+
+  });
+});
+
+const toggleButtonState = (inputs, buttonSubmitElement) => {
+  const formIsValid = inputs.every(inputSelector => inputSelector.validity.valid);
+
+  if (formIsValid) {
+    buttonSubmitElement.removeAttribute('disabled');
+    buttonSubmitElement.classList.remove('popup__button_disabled');
+  } else {
+    buttonSubmitElement.setAttribute('disabled', 'true');
+    buttonSubmitElement.classList.add('popup__button_disabled');
+  } 
+}
+};
+
+const enableValidation = () => {
+  const forms = Array.from(document.querySelectorAll('.popup__form'));
+  forms.forEach(form  => {
+    setEventListener(form);
+  });
+};
+
+enableValidation();
