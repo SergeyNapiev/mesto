@@ -1,7 +1,7 @@
 const popupEdit = document.querySelector('#edit');
 const popupAdd = document.querySelector('#add');
-const popupPhoto =document.querySelector('#photo');
-
+const popupPhoto = document.querySelector('#photo');
+const popup = Array.from(document.querySelectorAll('.popup'));
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = popupEdit.querySelector('#close-edit');
 const closeAddButton = popupAdd.querySelector('#close-add');
@@ -28,6 +28,23 @@ const addFormElement = document.querySelector('#add-place');
 const titleInput = popupAdd.querySelector('#place');
 const urlInput = popupAdd.querySelector('#url');
 
+const editButtonElement = editFormElement.querySelector('#submit-edit');
+const addButtonElement = addFormElement.querySelector('#submit-add');
+const errorAddElement = Array.from(addFormElement.querySelectorAll('.popup__error'));
+const errorAddInputElement = Array.from(addFormElement.querySelectorAll('.popup__input'));
+const errorEditElement = Array.from(editFormElement.querySelectorAll('.popup__error'));
+const errorEditInputElement = Array.from(editFormElement.querySelectorAll('.popup__input'));
+
+  popup.forEach(item => {
+    item.addEventListener('click', (evt) => {
+      console.log(evt.target);
+      console.log(evt.currentTarget);
+      if (evt.target === evt.currentTarget) {
+        closePopup(item);
+    }
+  })
+  });
+
 function openPopup (item) {
   item.classList.add('popup_opened');
 }
@@ -39,6 +56,13 @@ function closePopup (item) {
 function handleOpenEditForm () {
   nameInput.value = nameProfile.textContent;
   jobInput.value = aboutProfile.textContent;
+  enableButton(editButtonElement, validationOptions.inactiveButtonClass);
+  errorEditElement.forEach(item => {
+    item.classList.remove('popup__error_visible');
+  });
+  errorEditInputElement.forEach(item => {
+    item.classList.remove('popup__input_type_error');
+  })
   openPopup(popupEdit);
 }
 
@@ -51,6 +75,13 @@ function handleEditFormSubmit (evt) {
 
 function handleOpenAddForm () {
   addFormElement.reset();
+  disableButton(addButtonElement, validationOptions.inactiveButtonClass);
+  errorAddElement.forEach(item => {
+    item.classList.remove('popup__error_visible');
+  });
+  errorAddInputElement.forEach(item => {
+    item.classList.remove('popup__input_type_error');
+  })
   openPopup(popupAdd);
 }
 
@@ -130,89 +161,7 @@ addButton.addEventListener('click', handleOpenAddForm);
 
 // для валидации
 
-const hiddenError = (errorElement, submitSelector, inputErrorClass, errorClass) => {
-  errorElement.innerText = '';
-  submitSelector.classList.remove(inputErrorClass);
-  errorElement.classList.remove(errorClass);
-}
-
-const showError = (submitSelector, errorElement, message, inputErrorClass, errorClass) => {
-  errorElement.innerText = message;
-  submitSelector.classList.add(inputErrorClass);
-  errorElement.classList.add(errorClass);
-}
 
 
-const toggleInputState = (submitSelector, options) => {
-  const isValid = submitSelector.validity.valid;
-  const inputSectionElenemt = submitSelector.closest(options.inputSectionsSelector);
-  const errorElement = inputSectionElenemt.querySelector(options.inputErrorSelector);
-  if (isValid) {
-      hiddenError(errorElement, submitSelector, options.inputErrorClass, options.errorClass);
-    } else {
-      showError(submitSelector, errorElement, submitSelector.validationMessage, options.inputErrorClass, options.errorClass);
-    }
-}
+enableValidation(validationOptions);
 
-const enableButton = (buttonSubmitElement, inactiveButtonClass) => {
-  buttonSubmitElement.removeAttribute('disabled');
-  buttonSubmitElement.classList.remove(inactiveButtonClass);
-};
-
-const disableButton = (buttonSubmitElement, inactiveButtonClass) => {
-  buttonSubmitElement.setAttribute('disabled', 'true');
-  buttonSubmitElement.classList.add(inactiveButtonClass);
-};
-
-const enableValidation = (options) => {
-  const forms = Array.from(document.querySelectorAll(options.formSelector));
-  forms.forEach(form  => {
-    setEventListener(form, options);
-  });
-};
-
-const toggleButtonState = (inputs, buttonSubmitElement, inactiveButtonClass) => {
-  const formIsValid = inputs.every(submitSelector => submitSelector.validity.valid);
-  if (formIsValid) {
-    enableButton(buttonSubmitElement, inactiveButtonClass);
-  } else {
-    disableButton(buttonSubmitElement, inactiveButtonClass);
-  } 
-}
-
-const setEventListener = (form, options) => {
-  const buttonSubmitElement = form.querySelector(options.submitButtonSelector);
-  const inputs = Array.from(form.querySelectorAll(options.inputSelector));
-
-  inputs.forEach(submitSelector => {
-    submitSelector.addEventListener('input', () => {
-      toggleInputState(submitSelector, options);
-      toggleButtonState(inputs, buttonSubmitElement, options.inactiveButtonClass);
-    });
-  });
-  toggleButtonState(inputs, buttonSubmitElement, options.inactiveButtonClass);
-};
-
-const options = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible',
-  inputSectionsSelector: '.popup__section',
-  inputErrorSelector: '.popup__error'
-}
-
-enableValidation(options);
-
-/* 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-}); 
-*/

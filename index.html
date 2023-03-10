@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Место</title>
     <link rel="stylesheet" href="./pages/index.css">
+    <script src="./scripts/validate.js" defer></script>
     <script src="./scripts/constants.js" defer></script>
     <script src="./scripts/index.js" defer></script>
 </head>
@@ -50,7 +51,7 @@
                         required minlength="2" maxlength="200" required>
                     <span class="popup__error" id="about-error"></span>
                 </div>
-                <button type="submit" class="popup__button" value="Сохранить" aria-label="save">Сохранить</button>
+                <button type="submit" id="submit-edit" class="popup__button" value="Сохранить" aria-label="save">Сохранить</button>
             </form>
         </div>
     </div>

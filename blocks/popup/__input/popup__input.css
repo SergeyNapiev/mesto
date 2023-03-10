@@ -14,12 +14,7 @@
     padding: 0 0 8px;
 }
 
-@media (max-width: 934px) {
-    .popup__input {
-        margin-left: 22px;
-        margin-right: 22px;
-    }   
-}
+
 
 .popup__input::placeholder {
     font-style: normal;
