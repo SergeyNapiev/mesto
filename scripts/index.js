@@ -35,15 +35,21 @@ const errorAddInputElement = Array.from(addFormElement.querySelectorAll('.popup_
 const errorEditElement = Array.from(editFormElement.querySelectorAll('.popup__error'));
 const errorEditInputElement = Array.from(editFormElement.querySelectorAll('.popup__input'));
 
-  popup.forEach(item => {
-    item.addEventListener('click', (evt) => {
-      console.log(evt.target);
-      console.log(evt.currentTarget);
-      if (evt.target === evt.currentTarget) {
-        closePopup(item);
+popup.forEach(item => {
+  item.addEventListener('click', (evt) => {
+    if (evt.target === evt.currentTarget) {
+      closePopup(item);
     }
-  })
   });
+});
+
+popup.forEach(item => {
+  document.addEventListener('keydown', (evt) => {
+    if (evt.code === "Escape" && item.classList.contains('popup_opened')) {
+      closePopup(item);
+    }
+  });
+});
 
 function openPopup (item) {
   item.classList.add('popup_opened');
