@@ -8,15 +8,6 @@
 
     opacity: 0;
     transition: opacity 0.3s;
-
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;   
-}
-
-@media (max-width: 934px) {
-    .popup__error {
-        font-size: 10px;
-        line-height: 12px;
-    }
+    min-height: 15px;
+    margin-top: 5px;
 }

@@ -3,9 +3,8 @@
     flex-direction: column;
     margin-left: 36px;
     margin-right: 36px;
-    margin-top: 8px;
+    margin-top: 4px;
     width: 358px;
-    position: relative;
 }
 
 @media (max-width: 934px) {

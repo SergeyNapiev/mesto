@@ -1,7 +1,7 @@
 const popupEdit = document.querySelector('#edit');
 const popupAdd = document.querySelector('#add');
 const popupPhoto = document.querySelector('#photo');
-const popup = Array.from(document.querySelectorAll('.popup'));
+const popups = Array.from(document.querySelectorAll('.popup'));
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = popupEdit.querySelector('#close-edit');
 const closeAddButton = popupAdd.querySelector('#close-add');
@@ -27,6 +27,8 @@ const urlPlace = template.querySelector('.elements__item');
 const addFormElement = document.querySelector('#add-place');
 const titleInput = popupAdd.querySelector('#place');
 const urlInput = popupAdd.querySelector('#url');
+const fullImage = document.querySelector('.popup__item'); 
+const fullImageTitle = document.querySelector('.popup__title'); 
 
 const editButtonElement = editFormElement.querySelector('#submit-edit');
 const addButtonElement = addFormElement.querySelector('#submit-add');
@@ -35,27 +37,31 @@ const errorAddInputElement = Array.from(addFormElement.querySelectorAll('.popup_
 const errorEditElement = Array.from(editFormElement.querySelectorAll('.popup__error'));
 const errorEditInputElement = Array.from(editFormElement.querySelectorAll('.popup__input'));
 
-popup.forEach(item => {
-  item.addEventListener('click', (evt) => {
+popups.forEach(item => {
+  item.addEventListener('mousedown', (evt) => {
     if (evt.target === evt.currentTarget) {
       closePopup(item);
     }
   });
 });
 
-popup.forEach(item => {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.code === "Escape" && item.classList.contains('popup_opened')) {
-      closePopup(item);
+function handleCloseByEscape (evt, item) {
+    if (evt.code === "Escape") { 
+      closePopup(item); 
     }
-  });
-});
+}
 
 function openPopup (item) {
+  document.addEventListener('keydown', (evt) => {
+    handleCloseByEscape(evt, item)
+  }); 
   item.classList.add('popup_opened');
 }
 
 function closePopup (item) {
+  document.removeEventListener('keydown', (evt) => {
+    handleCloseByEscape(evt, item)
+  }); 
   item.classList.remove('popup_opened');
 }
 
@@ -120,8 +126,6 @@ const getElement = (element) => {
   
   const photoElement = newElement.querySelector('.elements__item'); 
   photoElement .addEventListener("click", () => { 
-        const fullImage = document.querySelector('.popup__item'); 
-        const fullImageTitle = document.querySelector('.popup__title'); 
         fullImage.src = newElementPhoto.src; 
         fullImageTitle.textContent = newElementTitile.textContent; 
         fullImage.setAttribute('alt', fullImageTitle.textContent); 
