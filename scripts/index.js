@@ -45,23 +45,20 @@ popups.forEach(item => {
   });
 });
 
-function handleCloseByEscape (evt, item) {
+function handleCloseByEscape (evt) {
     if (evt.code === "Escape") { 
-      closePopup(item); 
+      const popupOpened = document.querySelector('.popup_opened');
+      closePopup(popupOpened); 
     }
 }
 
 function openPopup (item) {
-  document.addEventListener('keydown', (evt) => {
-    handleCloseByEscape(evt, item)
-  }); 
+  document.addEventListener('keydown', handleCloseByEscape);
   item.classList.add('popup_opened');
 }
 
 function closePopup (item) {
-  document.removeEventListener('keydown', (evt) => {
-    handleCloseByEscape(evt, item)
-  }); 
+  document.removeEventListener('keydown', handleCloseByEscape);
   item.classList.remove('popup_opened');
 }
 

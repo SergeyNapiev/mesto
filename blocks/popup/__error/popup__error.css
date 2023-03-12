@@ -8,6 +8,6 @@
 
     opacity: 0;
     transition: opacity 0.3s;
-    min-height: 15px;
+    min-height: 30px;
     margin-top: 5px;
 }
