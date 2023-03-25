@@ -1,6 +1,58 @@
+import Card  from './Card.js';
+import FormValidator from './FormValidator.js';
+
+const initialCards = [
+    {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    },
+]; 
+
+const validationOptions = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
+  inputSectionsSelector: '.popup__section',
+  inputErrorSelector: '.popup__error'
+}
+
+export { validationOptions };
+
+const container = document.querySelector('.elements');
+
+initialCards.forEach((item) => {
+  const card = new Card(item, container);
+  card.render();
+})
+
+//
 const popupEdit = document.querySelector('#edit');
 const popupAdd = document.querySelector('#add');
 const popupPhoto = document.querySelector('#photo');
+export { popupPhoto };
 const popups = Array.from(document.querySelectorAll('.popup'));
 const editButton = document.querySelector('.profile__edit-button');
 const closeEditButton = popupEdit.querySelector('#close-edit');
@@ -9,26 +61,16 @@ const closePhotoButton = popupPhoto.querySelector('#close-photo');
 const addButton = document.querySelector('.profile__add-button');
 
 
-const editHeading = popupAdd.querySelector('.popup__heading');
-
-
 const editFormElement = document.querySelector('#edit-info');
 const nameInput = editFormElement.querySelector('#name');
 const jobInput = editFormElement.querySelector('#about');
 const nameProfile = document.querySelector('.profile__name');
 const aboutProfile = document.querySelector('.profile__about');
 
-const elementsListWrapper = document.querySelector('.elements');
-const element = document.querySelector('.elements__element');
-const template = document.querySelector('#element').content;
-const namePlace = template.querySelector('.elements__title');
-const urlPlace = template.querySelector('.elements__item');
-
 const addFormElement = document.querySelector('#add-place');
 const titleInput = popupAdd.querySelector('#place');
 const urlInput = popupAdd.querySelector('#url');
-const fullImage = document.querySelector('.popup__item'); 
-const fullImageTitle = document.querySelector('.popup__title'); 
+
 
 const editButtonElement = editFormElement.querySelector('#submit-edit');
 const addButtonElement = addFormElement.querySelector('#submit-add');
@@ -57,6 +99,8 @@ function openPopup (item) {
   item.classList.add('popup_opened');
 }
 
+export { openPopup };
+
 function closePopup (item) {
   document.removeEventListener('keydown', handleCloseByEscape);
   item.classList.remove('popup_opened');
@@ -65,7 +109,7 @@ function closePopup (item) {
 function handleOpenEditForm () {
   nameInput.value = nameProfile.textContent;
   jobInput.value = aboutProfile.textContent;
-  enableButton(editButtonElement, validationOptions.inactiveButtonClass);
+  runValidation.enableButton(editButtonElement, validationOptions.inactiveButtonClass);
   errorEditElement.forEach(item => {
     item.classList.remove('popup__error_visible');
   });
@@ -84,7 +128,7 @@ function handleEditFormSubmit (evt) {
 
 function handleOpenAddForm () {
   addFormElement.reset();
-  disableButton(addButtonElement, validationOptions.inactiveButtonClass);
+  runValidation.disableButton(addButtonElement, validationOptions.inactiveButtonClass);
   errorAddElement.forEach(item => {
     item.classList.remove('popup__error_visible');
   });
@@ -94,52 +138,6 @@ function handleOpenAddForm () {
   openPopup(popupAdd);
 }
 
-//создание карточек
-const getElement = (element) => {
-  const newElement = template.querySelector('.elements__element').cloneNode(true);
-  const newElementTitile = newElement.querySelector('.elements__title');
-  const newElementPhoto = newElement.querySelector('.elements__item');
-
-  //удаление
-  const removeButton = newElement.querySelector('.elements__delete');
-
-  function handleRemoveButton () {
-    removeButton.closest('.elements__element').remove();
-  }
-  
-  removeButton.addEventListener('click', handleRemoveButton);
-
-  //лайк
-  const likeButton = newElement.querySelector('.elements__heart');
-  
-  function toggleLike () {
-      likeButton.classList.toggle('elements__heart_active');
-  }
-  likeButton.addEventListener('click', toggleLike);
-  
-  newElementTitile.textContent = element.name;
-  newElementPhoto.src = element.link;
-  newElementPhoto.alt = element.name; 
-  
-  const photoElement = newElement.querySelector('.elements__item'); 
-  photoElement .addEventListener("click", () => { 
-        fullImage.src = newElementPhoto.src; 
-        fullImageTitle.textContent = newElementTitile.textContent; 
-        fullImage.setAttribute('alt', fullImageTitle.textContent); 
-        openPopup(popupPhoto); 
-        } 
-  );
-
-  return newElement;
-}
-
-const renderElement = (wrap, element) => {
-  wrap.prepend(getElement(element));
-}
-
-initialCards.forEach((element) => {
-  renderElement(elementsListWrapper, element);
-})
 
 addFormElement.addEventListener('submit', (evt) => { 
   evt.preventDefault(); 
@@ -147,7 +145,9 @@ addFormElement.addEventListener('submit', (evt) => {
     name: titleInput.value,
     link: urlInput.value
   }
-  renderElement(elementsListWrapper, newCard); 
+  initialCards.push(newCard)
+  const card = new Card(newCard, container);
+  card.render();
   closePopup(popupAdd); 
 }) 
 
@@ -164,11 +164,6 @@ closePhotoButton.addEventListener('click',() => {
 editFormElement.addEventListener('submit', handleEditFormSubmit);
 addButton.addEventListener('click', handleOpenAddForm);
 
-
-
 // для валидации
-
-
-
-enableValidation(validationOptions);
-
+const runValidation = new FormValidator(validationOptions);
+runValidation.enableValidation();

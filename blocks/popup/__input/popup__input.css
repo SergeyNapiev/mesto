@@ -14,7 +14,9 @@
     padding: 0 0 8px;
 }
 
-
+.popup__input:focus {
+    outline: 0;
+}
 
 .popup__input::placeholder {
     font-style: normal;
