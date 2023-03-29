@@ -43,11 +43,6 @@ export { validationOptions };
 
 const container = document.querySelector('.elements');
 
-initialCards.forEach((item) => {
-  const card = new Card(item, container);
-  card.render();
-})
-
 //
 const popupEdit = document.querySelector('#edit');
 const popupAdd = document.querySelector('#add');
@@ -55,9 +50,6 @@ const popupPhoto = document.querySelector('#photo');
 export { popupPhoto };
 const popups = Array.from(document.querySelectorAll('.popup'));
 const editButton = document.querySelector('.profile__edit-button');
-const closeEditButton = popupEdit.querySelector('#close-edit');
-const closeAddButton = popupAdd.querySelector('#close-add');
-const closePhotoButton = popupPhoto.querySelector('#close-photo');
 const addButton = document.querySelector('.profile__add-button');
 
 
@@ -71,13 +63,10 @@ const addFormElement = document.querySelector('#add-place');
 const titleInput = popupAdd.querySelector('#place');
 const urlInput = popupAdd.querySelector('#url');
 
+// для валидации
+const editFormValidation = new FormValidator(validationOptions, editFormElement);
+const addFormValidation = new FormValidator(validationOptions, addFormElement);
 
-const editButtonElement = editFormElement.querySelector('#submit-edit');
-const addButtonElement = addFormElement.querySelector('#submit-add');
-const errorAddElement = Array.from(addFormElement.querySelectorAll('.popup__error'));
-const errorAddInputElement = Array.from(addFormElement.querySelectorAll('.popup__input'));
-const errorEditElement = Array.from(editFormElement.querySelectorAll('.popup__error'));
-const errorEditInputElement = Array.from(editFormElement.querySelectorAll('.popup__input'));
 
 popups.forEach(item => {
   item.addEventListener('mousedown', (evt) => {
@@ -106,17 +95,19 @@ function closePopup (item) {
   item.classList.remove('popup_opened');
 }
 
+function handleOpenAddForm () {
+  addFormElement.reset();
+  // addFormValidation.resetValidation();
+  openPopup(popupAdd);
+  addFormValidation.enableValidation();
+}
+
 function handleOpenEditForm () {
   nameInput.value = nameProfile.textContent;
   jobInput.value = aboutProfile.textContent;
-  runValidation.enableButton(editButtonElement, validationOptions.inactiveButtonClass);
-  errorEditElement.forEach(item => {
-    item.classList.remove('popup__error_visible');
-  });
-  errorEditInputElement.forEach(item => {
-    item.classList.remove('popup__input_type_error');
-  })
+  // editFormValidation.resetValidation();
   openPopup(popupEdit);
+  editFormValidation.enableValidation();
 }
 
 function handleEditFormSubmit (evt) {
@@ -126,17 +117,13 @@ function handleEditFormSubmit (evt) {
   closePopup(popupEdit);
 }
 
-function handleOpenAddForm () {
-  addFormElement.reset();
-  runValidation.disableButton(addButtonElement, validationOptions.inactiveButtonClass);
-  errorAddElement.forEach(item => {
-    item.classList.remove('popup__error_visible');
-  });
-  errorAddInputElement.forEach(item => {
-    item.classList.remove('popup__input_type_error');
-  })
-  openPopup(popupAdd);
-}
+initialCards.forEach((item) => {
+  const card = new Card(item, container);
+  const newCard = card.generateCard();
+  container.prepend(newCard);
+})
+
+
 
 
 addFormElement.addEventListener('submit', (evt) => { 
@@ -145,25 +132,18 @@ addFormElement.addEventListener('submit', (evt) => {
     name: titleInput.value,
     link: urlInput.value
   }
-  initialCards.push(newCard)
   const card = new Card(newCard, container);
-  card.render();
+  const addNewCard = card.generateCard();
+  container.prepend(addNewCard);
   closePopup(popupAdd); 
 }) 
 
 editButton.addEventListener('click', handleOpenEditForm);
-closeEditButton.addEventListener('click', () => {
-  closePopup(popupEdit);
-});
-closeAddButton.addEventListener('click', () => {
-  closePopup(popupAdd);
-});
-closePhotoButton.addEventListener('click',() => {
-  closePopup(popupPhoto);
+
+const closeButtons = document.querySelectorAll('.popup__close');
+closeButtons.forEach((button) => {
+  const popup = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(popup));
 });
 editFormElement.addEventListener('submit', handleEditFormSubmit);
 addButton.addEventListener('click', handleOpenAddForm);
-
-// для валидации
-const runValidation = new FormValidator(validationOptions);
-runValidation.enableValidation();
