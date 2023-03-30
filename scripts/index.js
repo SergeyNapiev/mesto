@@ -28,7 +28,7 @@ const initialCards = [
     },
 ]; 
 
-const validationOptions = {
+const validationOptions = ({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -37,7 +37,7 @@ const validationOptions = {
   errorClass: 'popup__error_visible',
   inputSectionsSelector: '.popup__section',
   inputErrorSelector: '.popup__error'
-}
+});
 
 export { validationOptions };
 
@@ -65,6 +65,7 @@ const urlInput = popupAdd.querySelector('#url');
 
 // для валидации
 const editFormValidation = new FormValidator(validationOptions, editFormElement);
+
 const addFormValidation = new FormValidator(validationOptions, addFormElement);
 
 
@@ -97,7 +98,7 @@ function closePopup (item) {
 
 function handleOpenAddForm () {
   addFormElement.reset();
-  // addFormValidation.resetValidation();
+  addFormValidation.resetValidation();
   openPopup(popupAdd);
   addFormValidation.enableValidation();
 }
@@ -105,8 +106,8 @@ function handleOpenAddForm () {
 function handleOpenEditForm () {
   nameInput.value = nameProfile.textContent;
   jobInput.value = aboutProfile.textContent;
-  // editFormValidation.resetValidation();
   openPopup(popupEdit);
+  editFormValidation.resetValidation();
   editFormValidation.enableValidation();
 }
 
@@ -115,6 +116,7 @@ function handleEditFormSubmit (evt) {
   nameProfile.textContent = nameInput.value;
   aboutProfile.textContent = jobInput.value;
   closePopup(popupEdit);
+
 }
 
 initialCards.forEach((item) => {
