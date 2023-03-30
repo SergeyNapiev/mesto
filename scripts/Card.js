@@ -29,7 +29,7 @@ class Card {
     }
 
     _handleRemoveCard = () => {
-        this._view.remove();
+        this._card.remove();
     }
 
     _handleLikeCard = () => {

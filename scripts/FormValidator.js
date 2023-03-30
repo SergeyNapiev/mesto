@@ -13,7 +13,6 @@ class FormValidator {
 
   _hiddenError(inputElement) {
     this._errorElement = inputElement.nextElementSibling;
-    console.log(this._errorElement);
     this._errorElement.innerText = '';
     inputElement.classList.remove(this._inputErrorClass);
     this._errorElement.classList.remove(this._errorClass);
@@ -21,7 +20,6 @@ class FormValidator {
 
   _showError(inputElement) {
     this._errorElement = inputElement.nextElementSibling;
-    console.log(this._errorElement);
     this._errorElement.innerText = inputElement.validationMessage;
     inputElement.classList.add(this._inputErrorClass);
     this._errorElement.classList.add(this._errorClass);
