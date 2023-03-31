@@ -1,13 +1,10 @@
-import { openPopup, popupPhoto } from "./index.js";
-
 class Card {
 
-    constructor(item, container, templateSelector/*, handleCardClick*/) {
+    constructor(item, container, handleCardClick) {
         this._name = item.name;
         this._link = item.link;
         this._container = container;
-        this._templateSelector = templateSelector;
-        // this._handleCardClick = handleCardClick;
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -21,8 +18,7 @@ class Card {
         this._card.querySelector('.elements__title').textContent = this._name;
         this._card.querySelector('.elements__item').alt = this._name;
         this._card.querySelector('.elements__item').src = this._link;
-        this._fullImage = document.querySelector('.popup__item');
-        this._fullImageTitle = document.querySelector('.popup__title');
+
         this._cardImage = this._card.querySelector('.elements__item');
         this._setEventListeners();
 
@@ -37,25 +33,14 @@ class Card {
         this._buttonHeart.classList.toggle('elements__heart_active');
     }
 
-    _handleFullScreenCadr = () => {
-        this._fullImage.src = this._cardImage.src; 
-        this._fullImage.alt = this._cardImage.alt; 
-        this._fullImageTitle.textContent = this._card.querySelector('.elements__title').textContent; 
-
-        openPopup(popupPhoto); 
-    }
-
     _setEventListeners = () => {
         this._buttonDeleteCard = this._card.querySelector('.elements__delete');
         this._buttonHeart = this._card.querySelector('.elements__heart');
-        // this._buttonFullScreen = this._card.querySelector('.elements__item');
-
         this._buttonDeleteCard.addEventListener('click', this._handleRemoveCard);
         this._buttonHeart.addEventListener('click', this._handleLikeCard);
-        this._cardImage.addEventListener('click', this._handleFullScreenCadr);
-        // this._cardImage.addEventListener('click', () => {
-        //     this._handleCardClick(this._name, this._link)
-        //   });
+        this._cardImage.addEventListener('click', () => {
+            this._handleCardClick(this._name, this._link)
+          });
     }
 
 }

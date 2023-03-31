@@ -39,8 +39,6 @@ const validationOptions = ({
   inputErrorSelector: '.popup__error'
 });
 
-export { validationOptions };
-
 const container = document.querySelector('.elements');
 
 //
@@ -101,7 +99,6 @@ function handleOpenAddForm () {
   addFormElement.reset();
   addFormValidation.resetValidation();
   openPopup(popupAdd);
-
 }
 
 function handleOpenEditForm () {
@@ -109,7 +106,6 @@ function handleOpenEditForm () {
   jobInput.value = aboutProfile.textContent;
   openPopup(popupEdit);
   editFormValidation.resetValidation();
-
 }
 
 function handleEditFormSubmit (evt) {
@@ -117,11 +113,10 @@ function handleEditFormSubmit (evt) {
   nameProfile.textContent = nameInput.value;
   aboutProfile.textContent = jobInput.value;
   closePopup(popupEdit);
-
 }
 
 function createCard(item) {
-  const card = new Card(item, container);
+  const card = new Card(item, container, handleCardClick);
   const newCard = card.generateCard();
   return newCard;
 }
@@ -130,12 +125,16 @@ initialCards.forEach((item) => {
   container.prepend(createCard(item));
 })
 
-// function handleCardClick(name, link) {
-//   устанавливаем ссылку
-//   устанавливаем подпись картинке
-//   открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
-// }
 
+const fullImage = popupPhoto.querySelector('.popup__item');
+const fullImageTitle = popupPhoto.querySelector('.popup__title');
+
+function handleCardClick(name, link) {
+  fullImage.src = link;
+  fullImage.alt = name;
+  fullImageTitle.textContent = name;
+  openPopup(popupPhoto); 
+}
 
 addFormElement.addEventListener('submit', (evt) => { 
   evt.preventDefault(); 
