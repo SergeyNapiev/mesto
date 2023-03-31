@@ -2,11 +2,12 @@ import { openPopup, popupPhoto } from "./index.js";
 
 class Card {
 
-    constructor(item, container, templateSelector) {
+    constructor(item, container, templateSelector/*, handleCardClick*/) {
         this._name = item.name;
         this._link = item.link;
         this._container = container;
         this._templateSelector = templateSelector;
+        // this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -47,11 +48,14 @@ class Card {
     _setEventListeners = () => {
         this._buttonDeleteCard = this._card.querySelector('.elements__delete');
         this._buttonHeart = this._card.querySelector('.elements__heart');
-        this._buttonFullScreen = this._card.querySelector('.elements__item');
+        // this._buttonFullScreen = this._card.querySelector('.elements__item');
 
         this._buttonDeleteCard.addEventListener('click', this._handleRemoveCard);
         this._buttonHeart.addEventListener('click', this._handleLikeCard);
-        this._buttonFullScreen.addEventListener('click', this._handleFullScreenCadr);
+        this._cardImage.addEventListener('click', this._handleFullScreenCadr);
+        // this._cardImage.addEventListener('click', () => {
+        //     this._handleCardClick(this._name, this._link)
+        //   });
     }
 
 }

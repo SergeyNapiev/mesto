@@ -65,9 +65,10 @@ const urlInput = popupAdd.querySelector('#url');
 
 // для валидации
 const editFormValidation = new FormValidator(validationOptions, editFormElement);
+editFormValidation.enableValidation();
 
 const addFormValidation = new FormValidator(validationOptions, addFormElement);
-
+addFormValidation.enableValidation();
 
 popups.forEach(item => {
   item.addEventListener('mousedown', (evt) => {
@@ -100,7 +101,7 @@ function handleOpenAddForm () {
   addFormElement.reset();
   addFormValidation.resetValidation();
   openPopup(popupAdd);
-  addFormValidation.enableValidation();
+
 }
 
 function handleOpenEditForm () {
@@ -108,7 +109,7 @@ function handleOpenEditForm () {
   jobInput.value = aboutProfile.textContent;
   openPopup(popupEdit);
   editFormValidation.resetValidation();
-  editFormValidation.enableValidation();
+
 }
 
 function handleEditFormSubmit (evt) {
@@ -119,13 +120,21 @@ function handleEditFormSubmit (evt) {
 
 }
 
-initialCards.forEach((item) => {
+function createCard(item) {
   const card = new Card(item, container);
   const newCard = card.generateCard();
-  container.prepend(newCard);
+  return newCard;
+}
+
+initialCards.forEach((item) => {
+  container.prepend(createCard(item));
 })
 
-
+// function handleCardClick(name, link) {
+//   устанавливаем ссылку
+//   устанавливаем подпись картинке
+//   открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
+// }
 
 
 addFormElement.addEventListener('submit', (evt) => { 
@@ -134,9 +143,7 @@ addFormElement.addEventListener('submit', (evt) => {
     name: titleInput.value,
     link: urlInput.value
   }
-  const card = new Card(newCard, container);
-  const addNewCard = card.generateCard();
-  container.prepend(addNewCard);
+  container.prepend(createCard(newCard));
   closePopup(popupAdd); 
 }) 
 

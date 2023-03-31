@@ -48,7 +48,6 @@ class FormValidator {
   };
 
   _toggleButtonState() {
-    this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
     this._formIsValid = this._inputList.every(inputElement => inputElement.validity.valid);
     if (this._formIsValid) {
       this._enableButton();
