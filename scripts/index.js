@@ -1,5 +1,10 @@
 import Card  from './Card.js';
 import FormValidator from './FormValidator.js';
+import Section from './Section.js';
+// import Popup from './Popup.js';
+// import PopupWithImage from './PopupWithImage.js';
+// import PopupWithForm from './PopupWithForm.js';
+// import UserInfo from './UserInfo.js';
 
 const initialCards = [
     {
@@ -88,8 +93,6 @@ function openPopup (item) {
   item.classList.add('popup_opened');
 }
 
-export { openPopup };
-
 function closePopup (item) {
   document.removeEventListener('keydown', handleCloseByEscape);
   item.classList.remove('popup_opened');
@@ -121,10 +124,17 @@ function createCard(item) {
   return newCard;
 }
 
-initialCards.forEach((item) => {
-  container.prepend(createCard(item));
-})
+// function renderer() {
+//   container.prepend(createCard(item));
+// };
 
+// initialCards.forEach((item) => {
+//   container.prepend(createCard(item));
+// })
+
+const renderer = (item) => {
+  container.prepend(createCard(item));
+}
 
 const fullImage = popupPhoto.querySelector('.popup__item');
 const fullImageTitle = popupPhoto.querySelector('.popup__title');
@@ -135,6 +145,9 @@ function handleCardClick(name, link) {
   fullImageTitle.textContent = name;
   openPopup(popupPhoto); 
 }
+
+const cardZone = new Section({items: initialCards, renderer}, container);
+cardZone.renderItems();
 
 addFormElement.addEventListener('submit', (evt) => { 
   evt.preventDefault(); 
