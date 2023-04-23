@@ -96,32 +96,40 @@ const userInfo = new UserInfo({
 //   const newUser = userInfo.setUserInfo();
 // });
 
-const popupWithEditForm = new PopupWithForm(popupEdit, handleSubmitEditForm);
+const popupWithEditForm = new PopupWithForm(popupEdit,
+   (name, about) => {
+    userInfo.setUserInfo(name, about);
+    popupWithEditForm.close();
+  }
+);
 
 popupWithEditForm.setEventListeners();
 
-const popupWithAddForm = new PopupWithForm(
-  popupAdd,
-  (data) => {
+const popupWithAddForm = new PopupWithForm(popupAdd,
+   (data) => {
     const newCard = createCard(data);
     cardZone.addItem(newCard);
     popupWithAddForm.close();
-  });
+  }
+);
 
 popupWithAddForm.setEventListeners();
 
-function handleOpenAddForm() {
-  addFormElement.reset();
-  addFormValidation.resetValidation();
-  popupWithAddForm.open();
-}
 
-function handleSubmitEditForm () {
-  // evt.preventDefault();
-  nameProfile.textContent = nameInput.value;
-  aboutProfile.textContent = jobInput.value;
-  popupWithEditForm.close();
-};
+
+// function handleSubmitEditForm() {
+//   // evt.preventDefault();
+//   // nameProfile.textContent = nameInput.value;
+//   // aboutProfile.textContent = jobInput.value;
+//   userInfo.setUserInfo(nameProfile.textContent, aboutProfile.textContent)
+//   popupWithEditForm.close();
+// };
+
+// function handleSubmitAddForm(item) {
+//   const newCard = createCard(item);
+//     cardZone.addItem(newCard);
+//     popupWithAddForm.close();
+// }
 
 
 function createCard(item) {
@@ -159,6 +167,12 @@ function handleOpenEditForm() {
   jobInput.value = oldUser.about;
   editFormValidation.resetValidation();
   popupWithEditForm.open();
+}
+
+function handleOpenAddForm() {
+  addFormElement.reset();
+  addFormValidation.resetValidation();
+  popupWithAddForm.open();
 }
 
 editButton.addEventListener('click', handleOpenEditForm);
