@@ -57,8 +57,8 @@ const addButton = document.querySelector('.profile__add-button');
 const editFormElement = document.querySelector('#edit-info');
 const nameInput = editFormElement.querySelector('#name');
 const jobInput = editFormElement.querySelector('#about');
-const nameProfile = document.querySelector('.profile__name');
-const aboutProfile = document.querySelector('.profile__about');
+// const nameProfile = document.querySelector('.profile__name');
+// const aboutProfile = document.querySelector('.profile__about');
 
 const addFormElement = document.querySelector('#add-place');
 // const titleInput = popupAdd.querySelector('#place');
@@ -77,25 +77,6 @@ const userInfo = new UserInfo({
   about: '.profile__about   '
 });
 
-// function poupEditProfile() {
-//   const oldUser = userInfo.getUserInfo();
-
-// }
-
-// function handleESubmitditForm(evt)  {
-//   evt.preventDefault();
-//   userInfo.setUserInfo({
-//     name: nameInput.value,
-//     about: jobInput.value
-//   })
-//   popupWithEditForm.close();
-// }
-
-// editFormElement.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   const newUser = userInfo.setUserInfo();
-// });
-
 const popupWithEditForm = new PopupWithForm(popupEdit,
    (name, about) => {
     userInfo.setUserInfo(name, about);
@@ -107,30 +88,15 @@ popupWithEditForm.setEventListeners();
 
 const popupWithAddForm = new PopupWithForm(popupAdd,
    (data) => {
+    console.log(data);
     const newCard = createCard(data);
+    console.log(newCard);
     cardZone.addItem(newCard);
     popupWithAddForm.close();
   }
 );
 
 popupWithAddForm.setEventListeners();
-
-
-
-// function handleSubmitEditForm() {
-//   // evt.preventDefault();
-//   // nameProfile.textContent = nameInput.value;
-//   // aboutProfile.textContent = jobInput.value;
-//   userInfo.setUserInfo(nameProfile.textContent, aboutProfile.textContent)
-//   popupWithEditForm.close();
-// };
-
-// function handleSubmitAddForm(item) {
-//   const newCard = createCard(item);
-//     cardZone.addItem(newCard);
-//     popupWithAddForm.close();
-// }
-
 
 function createCard(item) {
   const card = new Card(item, container, handleCardClick);
@@ -150,16 +116,6 @@ function handleCardClick(name, link) {
 
 const cardZone = new Section({items: initialCards, renderer}, container);
 cardZone.renderItems();
-
-// addFormElement.addEventListener('submit', (evt) => { 
-//   evt.preventDefault(); 
-//   const newCard = {
-//     name: titleInput.value,
-//     link: urlInput.value
-//   }
-//   cardZone.addItem(createCard(newCard));
-//   closePopup(popupAdd); 
-// }) 
 
 function handleOpenEditForm() {
   const oldUser = userInfo.getUserInfo();
