@@ -84,7 +84,6 @@ popupWithEditForm.setEventListeners();
 
 const popupWithAddForm = new PopupWithForm(popupAdd,
    (item) => {
-    console.log(item);
     cardZone.addItem(createCard(item));
   }
 );
@@ -92,7 +91,6 @@ const popupWithAddForm = new PopupWithForm(popupAdd,
 popupWithAddForm.setEventListeners();
 
 function createCard(item) {
-  console.log(item);
   const card = new Card(item, container, handleCardClick);
   const newCard = card.generateCard();
   return newCard;
