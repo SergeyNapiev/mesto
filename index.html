@@ -57,10 +57,10 @@
             <button type="reset" id="close-add" class="popup__close" aria-label="Close"></button>
             <h2 class="popup__heading">Новое место</h2>
             <form id="add-place" name="info" class="popup__form" novalidate>
-                    <input type="text" id="place" placeholder="Название" class="popup__input" required minlength="2"
+                    <input type="text" id="place" name="name" placeholder="Название" class="popup__input" required minlength="2"
                         maxlength="30">
                     <span class="popup__error" id="place-error"></span>
-                    <input type="url" id="url" placeholder="Ссылка на картинку" class="popup__input" required>
+                    <input type="url" id="url" name="link" placeholder="Ссылка на картинку" class="popup__input" required>
                     <span class="popup__error" id="url-error"></span>
                 <button type="submit" id="submit-add" class="popup__button" value="Сохранить" aria-label="create">Создать</button>
             </form>

@@ -57,12 +57,8 @@ const addButton = document.querySelector('.profile__add-button');
 const editFormElement = document.querySelector('#edit-info');
 const nameInput = editFormElement.querySelector('#name');
 const jobInput = editFormElement.querySelector('#about');
-// const nameProfile = document.querySelector('.profile__name');
-// const aboutProfile = document.querySelector('.profile__about');
 
 const addFormElement = document.querySelector('#add-place');
-// const titleInput = popupAdd.querySelector('#place');
-// const urlInput = popupAdd.querySelector('#url');
 
 // для валидации
 const editFormValidation = new FormValidator(validationOptions, editFormElement);
@@ -87,18 +83,16 @@ const popupWithEditForm = new PopupWithForm(popupEdit,
 popupWithEditForm.setEventListeners();
 
 const popupWithAddForm = new PopupWithForm(popupAdd,
-   (data) => {
-    console.log(data);
-    const newCard = createCard(data);
-    console.log(newCard);
-    cardZone.addItem(newCard);
-    popupWithAddForm.close();
+   (item) => {
+    console.log(item);
+    cardZone.addItem(createCard(item));
   }
 );
 
 popupWithAddForm.setEventListeners();
 
 function createCard(item) {
+  console.log(item);
   const card = new Card(item, container, handleCardClick);
   const newCard = card.generateCard();
   return newCard;
