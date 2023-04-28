@@ -1,3 +1,4 @@
+import '../utils/constants.js';
 class FormValidator {
 
   constructor (validationOptions, form) {
@@ -9,6 +10,7 @@ class FormValidator {
     this._errorClass = validationOptions.errorClass;
     this._inputErrorSelector = validationOptions.inputErrorSelector;
     this._form = form;
+    this._buttonSubmitElement = this._form.querySelector(this._submitButtonSelector);
   };
 
   _hiddenError(inputElement) {
@@ -26,13 +28,11 @@ class FormValidator {
   };
 
   _enableButton = () => {
-    this._buttonSubmitElement = this._form.querySelector(this._submitButtonSelector);
     this._buttonSubmitElement.removeAttribute('disabled');
     this._buttonSubmitElement.classList.remove(this._inactiveButtonClass);
   };
 
   _disableButton = () => {
-    this._buttonSubmitElement = this._form.querySelector(this._submitButtonSelector);
     this._buttonSubmitElement.setAttribute('disabled', 'true');
     this._buttonSubmitElement.classList.add(this._inactiveButtonClass);
   };

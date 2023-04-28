@@ -20,6 +20,13 @@ class PopupWithForm extends Popup {
         // console.log(inputData);
         return inputData;
     }
+// можно лучше
+    // setInputValues(data) {
+    //     this._inputList.forEach((input) => {
+    //       // тут вставляем в `value` инпута данные из объекта по атрибуту `name` этого инпута
+    //       input.value = data[input.name];
+    //     });
+    //   }
 
     setEventListeners() {
         super.setEventListeners();

@@ -5,47 +5,11 @@ import Section from '../scripts/Section.js';
 import PopupWithImage from '../scripts/PopupWithImage.js';
 import PopupWithForm from '../scripts/PopupWithForm.js';
 import UserInfo from '../scripts/UserInfo.js';
-
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    },
-]; 
-
-const validationOptions = ({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible',
-  inputSectionsSelector: '.popup__section',
-  inputErrorSelector: '.popup__error'
-});
+import {validationOptions} from '../utils/constants.js';
+import {initialCards} from '../utils/constants.js';
 
 const container = document.querySelector('.elements');
-
+const templateSelector = document.querySelector('#element');
 //
 const popupEdit = document.querySelector('#edit');//
 const popupAdd = document.querySelector('#add');//
@@ -92,7 +56,7 @@ const popupWithAddForm = new PopupWithForm(popupAdd,
 popupWithAddForm.setEventListeners();
 
 function createCard(item) {
-  const card = new Card(item, container, handleCardClick);
+  const card = new Card(item, templateSelector, handleCardClick);
   const newCard = card.generateCard();
   return newCard;
 };
@@ -101,9 +65,10 @@ const renderer = (item) => {
   container.prepend(createCard(item));
 };
 
+const popupWithImage = new PopupWithImage(popupPhoto);
+popupWithImage.setEventListeners();
+
 function handleCardClick(name, link) {
-  const popupWithImage = new PopupWithImage(popupPhoto);
-  popupWithImage.setEventListeners();
   popupWithImage.open(name, link);
 };
 
@@ -119,7 +84,6 @@ function handleOpenEditForm() {
 }
 
 function handleOpenAddForm() {
-  addFormElement.reset();
   addFormValidation.resetValidation();
   popupWithAddForm.open();
 }
