@@ -109,9 +109,9 @@ api.getInitialCards()
 }); 
 
 // попап добавления новой карточки
-const popupWithAddForm = new PopupWithForm({
-  popupSelector: popupAdd,
-  handleFormSubmit: (item) => {
+const popupWithAddForm = new PopupWithForm(
+  popupAdd,
+  (item) => {
     api.addNewCard(item)
     .then(result=> {
       console.log(result);
@@ -120,7 +120,7 @@ const popupWithAddForm = new PopupWithForm({
     })
     console.log(item);
   }
-});
+);
 
 popupWithAddForm.setEventListeners();
 

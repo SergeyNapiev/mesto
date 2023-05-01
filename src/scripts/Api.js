@@ -27,7 +27,8 @@ class Api {
             return fetch(`${this._server}/cards`, {
                 method: 'POST',
                 headers: {
-                  authorization: this._headers
+                  authorization: this._headers,
+                  'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     name: item.name,
