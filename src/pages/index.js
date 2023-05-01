@@ -119,8 +119,7 @@ const popupConfirmation = new PopupWithConfirmation(popupConfirm,
 // открытие попап изменения данных профиля
 function handleOpenEditForm() {
   const oldUser = userInfo.getUserInfo();
-  nameInput.value = oldUser.name;
-  jobInput.value = oldUser.about;
+  popupWithEditForm.setInputValues(oldUser);
   editFormValidation.resetValidation();
   popupWithEditForm.open();
 }
