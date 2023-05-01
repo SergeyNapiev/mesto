@@ -73,10 +73,29 @@ class Api {
             return Promise.reject(`Ошибка: ${res.status}`);
           });
     }
-    // // профиль изменить данные
-    // setUserInfo() {
+    // профиль изменить данные
+    editUserInfo(item) {
+        return fetch(`${this._server}/users/me`, {
+            method: 'PATCH',
+            headers: {
+              authorization: this._headers,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: item.name,
+                about: item.about
+              })
+          })
+          .then(res => {
+            if (res.ok) {
+              return res.json();
+            }
+      
+            // если ошибка, отклоняем промис
+            return Promise.reject(`Ошибка: ${res.status}`);
+          });
+    }
 
-    // }
     // установить аватар
     setNewAvatar(item) {
         return fetch(`${this._server}/users/me/avatar`, {

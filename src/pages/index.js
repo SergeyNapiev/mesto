@@ -67,9 +67,17 @@ setServerUserInfo();
 // попап редактирования профиля
 const popupWithEditForm = new PopupWithForm(popupEdit,
    (name, about) => {
-    userInfo.setUserInfo(name, about);
-    popupWithEditForm.close();
-  }
+    api.editUserInfo(name, about)
+    .then((result) => {
+      result.name = name;
+      result.about = about;
+      userInfo.setUserInfo(result.name, result.about);
+      popupWithEditForm.close();
+    })
+    .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+    });
+   }
 );
 
 popupWithEditForm.setEventListeners();
@@ -81,6 +89,7 @@ const popupWithAvatarForm = new PopupWithForm(popupAvatar,
       api.setNewAvatar(item)
       .then(result=> {
         result.avatar = item.link;
+        userAvatar.src = result.avatar;
       })
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
