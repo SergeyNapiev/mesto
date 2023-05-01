@@ -6,9 +6,9 @@ import PopupWithImage from '../scripts/PopupWithImage.js';
 import PopupWithForm from '../scripts/PopupWithForm.js';
 import UserInfo from '../scripts/UserInfo.js';
 import {validationOptions} from '../utils/constants.js';
-import {initialCards} from '../utils/constants.js';
+// import {initialCards} from '../utils/constants.js';
 import PopupWithConfirmation from '../scripts/PopupWithconfirmation.js';
-// import Api from '../scripts/Api.js';
+import Api from '../scripts/Api.js';
 
 const container = document.querySelector('.elements');
 const templateSelector = document.querySelector('#element');
@@ -41,6 +41,11 @@ addFormValidation.enableValidation();
 
 const avatarFormValidation = new FormValidator(validationOptions, avatarFormElement);
 avatarFormValidation.enableValidation();
+
+const api = new Api(
+   'https://mesto.nomoreparties.co/v1/cohort-64',
+    '4ebb947e-2153-478d-938f-3cce41c29118',
+); 
 
 //профиль пользователя
 const userInfo = new UserInfo({
@@ -104,8 +109,18 @@ function handleDeleteClick(item) {
 }
 
 // создание секции карточек
-const cardZone = new Section({items: initialCards, renderer}, container);
-cardZone.renderItems();
+api.getInitialCards()
+  .then((result) => {
+    console.log((result));
+    const cardZone = new Section({
+      items: result,
+      renderer}, container);
+    cardZone.renderItems();
+  });
+  // .catch((err) => {
+  //   console.log(err); // выведем ошибку в консоль
+  // }); 
+
 
 // попап подтверждения удаления
 const popupConfirmation = new PopupWithConfirmation(popupConfirm, 
