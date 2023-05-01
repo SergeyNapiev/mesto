@@ -17,6 +17,7 @@
             <section class="profile">
                 <div class="profile__container">
                     <img src="<%=require('./images/Kusto.jpg')%>" alt="Аватар" class="profile__avatar">
+                    <button type="button" class="profile__set-avatar"></button>
                     <div class="profile__info">
                         <div class="profile__naming">
                             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -57,11 +58,11 @@
             <button type="reset" id="close-add" class="popup__close" aria-label="Close"></button>
             <h2 class="popup__heading">Новое место</h2>
             <form id="add-place" name="info" class="popup__form" novalidate>
-                    <input type="text" id="place" name="name" placeholder="Название" class="popup__input" required minlength="2"
-                        maxlength="30">
-                    <span class="popup__error" id="place-error"></span>
-                    <input type="url" id="url" name="link" placeholder="Ссылка на картинку" class="popup__input" required>
-                    <span class="popup__error" id="url-error"></span>
+                <input type="text" id="place" name="name" placeholder="Название" class="popup__input" required minlength="2"
+                maxlength="30">
+                <span class="popup__error" id="place-error"></span>
+                <input type="url" id="url" name="link" placeholder="Ссылка на картинку" class="popup__input" required>
+                <span class="popup__error" id="url-error"></span>
                 <button type="submit" id="submit-add" class="popup__button" value="Сохранить" aria-label="create">Создать</button>
             </form>
         </div>
@@ -73,14 +74,36 @@
             <h2 class="popup__title"></h2>
         </div>
     </div>
+    <div class="popup" id="avatar">
+        <div class="popup__container">
+            <button type="reset" id="close-add" class="popup__close" aria-label="Close"></button>
+            <h2 class="popup__heading">Обновить аватар</h2>
+            <form id="set-avatar" name="avatar" class="popup__form" novalidate>
+                    <input type="url" id="set-avatar" name="link" placeholder="Ссылка на картинку" class="popup__input" required>
+                    <span class="popup__error" id="url-error"></span>
+                <button type="submit" id="submit-avatar" class="popup__button" value="Сохранить" aria-label="create">Создать</button>
+            </form>
+        </div>
+    </div>
+    <div class="popup" id="delete">
+        <div class="popup__container">
+            <button type="reset" id="close-delete" class="popup__close" aria-label="Close"></button>
+            <h2 class="popup__heading">Вы уверены?</h2>
+            <form id="submit-delete" name="confirm" class="popup__form" novalidate></form>
+                <button type="submit" id="submit-delete" class="popup__button" value="Да" aria-label="delete">Да</button>
+            </form>
+        </div>
+    </div>
     <template id="element">
         <div class="elements__element">
             <button type="button" class="elements__delete" aria-label="delete"></button>
                 <img src="#" alt="" class="elements__item">
             <div class="elements__info">
                 <h2 class="elements__title" id="#element-title"></h2>
-                <button type="button" class="elements__heart" aria-label="like"></button>
-            </div>
+                <div class="elements__container">  
+                    <button type="button" class="elements__heart" aria-label="like"></button>
+                    <div class="elements__counter">5</div>
+                </div>
         </div>
     </template>
     <!-- <script src="./scripts/validate.js" defer></script> -->

@@ -7,23 +7,30 @@ import PopupWithForm from '../scripts/PopupWithForm.js';
 import UserInfo from '../scripts/UserInfo.js';
 import {validationOptions} from '../utils/constants.js';
 import {initialCards} from '../utils/constants.js';
+import PopupWithConfirmation from '../scripts/PopupWithconfirmation.js';
+// import Api from '../scripts/Api.js';
 
 const container = document.querySelector('.elements');
 const templateSelector = document.querySelector('#element');
+const avatar = document.querySelector('.profile__avatar');
 //
 const popupEdit = document.querySelector('#edit');//
 const popupAdd = document.querySelector('#add');//
 const popupPhoto = document.querySelector('#photo');//
+const popupAvatar = document.querySelector('#avatar');//
+const popupConfirm = document.querySelector('#delete');
 
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
-
+const avatarButton = document.querySelector('.profile__set-avatar')
 
 const editFormElement = document.querySelector('#edit-info');
 const nameInput = editFormElement.querySelector('#name');
 const jobInput = editFormElement.querySelector('#about');
 
 const addFormElement = document.querySelector('#add-place');
+const avatarFormElement = document.querySelector('#set-avatar');
+const deleteFormElement = document.querySelector('#delete-form');
 
 // для валидации
 const editFormValidation = new FormValidator(validationOptions, editFormElement);
@@ -32,12 +39,16 @@ editFormValidation.enableValidation();
 const addFormValidation = new FormValidator(validationOptions, addFormElement);
 addFormValidation.enableValidation();
 
+const avatarFormValidation = new FormValidator(validationOptions, avatarFormElement);
+avatarFormValidation.enableValidation();
+
 //профиль пользователя
 const userInfo = new UserInfo({
   name: '.profile__name',
   about: '.profile__about   '
 });
 
+// попап редактирования профиля
 const popupWithEditForm = new PopupWithForm(popupEdit,
    (name, about) => {
     userInfo.setUserInfo(name, about);
@@ -47,16 +58,30 @@ const popupWithEditForm = new PopupWithForm(popupEdit,
 
 popupWithEditForm.setEventListeners();
 
+// попап нового аватара
+const popupWithAvatarForm = new PopupWithForm(popupAvatar,
+  (item) => {
+    console.log(item);
+    avatar.src = item.link;
+  }
+);
+
+popupWithAvatarForm.setEventListeners();
+
+// попап добавления новой карточки
 const popupWithAddForm = new PopupWithForm(popupAdd,
    (item) => {
+    console.log(item);
     cardZone.addItem(createCard(item));
+    console.log(createCard(item));
   }
 );
 
 popupWithAddForm.setEventListeners();
 
+// создание новой карточки
 function createCard(item) {
-  const card = new Card(item, templateSelector, handleCardClick);
+  const card = new Card(item, templateSelector, handleCardClick, handleDeleteClick);
   const newCard = card.generateCard();
   return newCard;
 };
@@ -65,6 +90,7 @@ const renderer = (item) => {
   container.prepend(createCard(item));
 };
 
+// попап большой картинки
 const popupWithImage = new PopupWithImage(popupPhoto);
 popupWithImage.setEventListeners();
 
@@ -72,9 +98,24 @@ function handleCardClick(name, link) {
   popupWithImage.open(name, link);
 };
 
+function handleDeleteClick(item) {
+  console.log(item);
+  popupConfirmation.open(item);
+}
+
+// создание секции карточек
 const cardZone = new Section({items: initialCards, renderer}, container);
 cardZone.renderItems();
 
+function handleFormSubmit(item) {
+  container.removeItem(item);
+}
+
+
+const popupConfirmation = new PopupWithConfirmation(popupConfirm, handleFormSubmit);
+popupConfirmation.setEventListeners();
+
+// открытие попап изменения данных профиля
 function handleOpenEditForm() {
   const oldUser = userInfo.getUserInfo();
   nameInput.value = oldUser.name;
@@ -83,11 +124,18 @@ function handleOpenEditForm() {
   popupWithEditForm.open();
 }
 
+// открытие попап добавления карточки
 function handleOpenAddForm() {
   addFormValidation.resetValidation();
   popupWithAddForm.open();
 }
 
-editButton.addEventListener('click', handleOpenEditForm);
+// открытие попап обновить аватар
+function handleOpenAvetarForm() {
+  avatarFormValidation.resetValidation();
+  popupWithAvatarForm.open();
+}
 
+editButton.addEventListener('click', handleOpenEditForm);
 addButton.addEventListener('click', handleOpenAddForm);
+avatarButton.addEventListener('click', handleOpenAvetarForm);

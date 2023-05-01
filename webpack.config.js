@@ -24,6 +24,7 @@ module.exports = {
             filename: 'style.[contenthash].css',
         }),
     ],
+    devtool: 'source-map',
     module: {
         rules: [
           {
@@ -58,6 +59,7 @@ module.exports = {
                 filename: 'img/[name].[contenthash][ext]',
             }
           },
-        ]
+        ],
+
     }
 };

@@ -13,7 +13,12 @@ class Section {
 
     addItem(item) {
         this._containerSelector.prepend(item);
+        console.log(item);
     }
+
+    removeItem(item) {
+        this._containerSelector.removeChild(item);
+      }
 }
 
 export default Section;

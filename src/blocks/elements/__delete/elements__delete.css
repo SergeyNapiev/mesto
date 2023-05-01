@@ -9,8 +9,9 @@
     display: flex;
 
     position: absolute;
-    top: 20px;
-    right: 20px;
+    right: 15px;
+    top: 18px;
+    padding: 0;
 }
 
 .elements__delete:hover {
