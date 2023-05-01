@@ -73,16 +73,7 @@ const popupWithAvatarForm = new PopupWithForm(popupAvatar,
 
 popupWithAvatarForm.setEventListeners();
 
-// создание новой карточки
-function createCard(item) {
-  const card = new Card(item, templateSelector, handleCardClick, handleDeleteClick);
-  const newCard = card.generateCard();
-  return newCard;
-};
 
-const renderer = (item) => {
-  container.prepend(createCard(item));
-};
 
 // попап большой картинки
 const popupWithImage = new PopupWithImage(popupPhoto);
@@ -114,13 +105,25 @@ const popupWithAddForm = new PopupWithForm(
   (item) => {
     api.addNewCard(item)
     .then(result=> {
-      console.log(result);
-      container.addItem(createCard(result));
-      console.log(createCard(result));
+      const newCard = createCard(result);
+      container.prepend(newCard);
     })
-    console.log(item);
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+  });
   }
 );
+
+// создание новой карточки
+function createCard(item) {
+  const card = new Card(item, templateSelector, handleCardClick, handleDeleteClick);
+  const newCard = card.generateCard(item);
+  return newCard;
+};
+
+const renderer = (item) => {
+  container.prepend(createCard(item));
+};
 
 popupWithAddForm.setEventListeners();
 
