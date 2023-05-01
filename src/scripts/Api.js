@@ -64,10 +64,27 @@ class Api {
     // setUserInfo() {
 
     // }
-    // // установить аватар
-    // setNewAvatar() {
-
-    // }
+    // установить аватар
+    setNewAvatar(item) {
+        return fetch(`${this._server}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: {
+              authorization: this._headers,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                avatar: item.link
+              })
+          })
+          .then(res => {
+            if (res.ok) {
+              return res.json();
+            }
+      
+            // если ошибка, отклоняем промис
+            return Promise.reject(`Ошибка: ${res.status}`);
+          });
+    }
   }
   
 

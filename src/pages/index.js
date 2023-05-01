@@ -66,8 +66,14 @@ popupWithEditForm.setEventListeners();
 // попап нового аватара
 const popupWithAvatarForm = new PopupWithForm(popupAvatar,
   (item) => {
-    console.log(item);
-    avatar.src = item.link;
+      console.log(item);
+      api.setNewAvatar(item)
+      .then(result=> {
+        result.avatar = item.link;
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
   }
 );
 
@@ -105,8 +111,7 @@ const popupWithAddForm = new PopupWithForm(
   (item) => {
     api.addNewCard(item)
     .then(result=> {
-      const newCard = createCard(result);
-      container.prepend(newCard);
+      container.prepend(createCard(result));
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
