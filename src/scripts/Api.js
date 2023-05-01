@@ -7,8 +7,9 @@ class Api {
     // карточки
     getInitialCards() {
         return fetch(`${this._server}/cards`, {
-          headers: {
-            authorization: this._headers
+            method: 'GET',
+            headers: {
+                authorization: this._headers
           }
         })
           .then(res => {
@@ -20,10 +21,28 @@ class Api {
             return Promise.reject(`Ошибка: ${res.status}`);
           });
     } 
-    // // новая карточка
-    // addCard() {
+        // новая карточка
 
-    // }
+        addNewCard(item) {
+            return fetch(`${this._server}/cards`, {
+                method: 'POST',
+                headers: {
+                  authorization: this._headers
+                },
+                body: JSON.stringify({
+                    name: item.name,
+                    link: item.link
+                  })
+              })
+              .then(res => {
+                if (res.ok) {
+                  return res.json();
+                }
+          
+                // если ошибка, отклоняем промис
+                return Promise.reject(`Ошибка: ${res.status}`);
+              });
+        }
     // // удалить карточку
     // deleteCard() {
 

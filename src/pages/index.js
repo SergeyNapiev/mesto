@@ -25,8 +25,8 @@ const addButton = document.querySelector('.profile__add-button');
 const avatarButton = document.querySelector('.profile__set-avatar')
 
 const editFormElement = document.querySelector('#edit-info');
-const nameInput = editFormElement.querySelector('#name');
-const jobInput = editFormElement.querySelector('#about');
+// const nameInput = editFormElement.querySelector('#name');
+// const jobInput = editFormElement.querySelector('#about');
 
 const addFormElement = document.querySelector('#add-place');
 const avatarFormElement = document.querySelector('#set-avatar');
@@ -73,17 +73,6 @@ const popupWithAvatarForm = new PopupWithForm(popupAvatar,
 
 popupWithAvatarForm.setEventListeners();
 
-// попап добавления новой карточки
-const popupWithAddForm = new PopupWithForm(popupAdd,
-   (item) => {
-    console.log(item);
-    cardZone.addItem(createCard(item));
-    console.log(createCard(item));
-  }
-);
-
-popupWithAddForm.setEventListeners();
-
 // создание новой карточки
 function createCard(item) {
   const card = new Card(item, templateSelector, handleCardClick, handleDeleteClick);
@@ -104,23 +93,36 @@ function handleCardClick(name, link) {
 };
 
 function handleDeleteClick(item) {
-  console.log(item);
   popupConfirmation.open(item);
 }
 
 // создание секции карточек
 api.getInitialCards()
   .then((result) => {
-    console.log((result));
     const cardZone = new Section({
       items: result,
       renderer}, container);
     cardZone.renderItems();
-  });
-  // .catch((err) => {
-  //   console.log(err); // выведем ошибку в консоль
-  // }); 
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+}); 
 
+// попап добавления новой карточки
+const popupWithAddForm = new PopupWithForm({
+  popupSelector: popupAdd,
+  handleFormSubmit: (item) => {
+    api.addNewCard(item)
+    .then(result=> {
+      console.log(result);
+      container.addItem(createCard(result));
+      console.log(createCard(result));
+    })
+    console.log(item);
+  }
+});
+
+popupWithAddForm.setEventListeners();
 
 // попап подтверждения удаления
 const popupConfirmation = new PopupWithConfirmation(popupConfirm, 
