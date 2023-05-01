@@ -107,13 +107,14 @@ function handleDeleteClick(item) {
 const cardZone = new Section({items: initialCards, renderer}, container);
 cardZone.renderItems();
 
-function handleFormSubmit(item) {
-  container.removeItem(item);
-}
+// попап подтверждения удаления
+const popupConfirmation = new PopupWithConfirmation(popupConfirm, 
+  (item) => {
+    console.log(item);
+    cardZone.removeItem(item);
 
-
-const popupConfirmation = new PopupWithConfirmation(popupConfirm, handleFormSubmit);
-popupConfirmation.setEventListeners();
+  });
+  popupConfirmation.setEventListeners();
 
 // открытие попап изменения данных профиля
 function handleOpenEditForm() {
