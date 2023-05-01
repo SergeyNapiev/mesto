@@ -56,10 +56,23 @@ class Api {
     // deleteLike() {
 
     // }
-    // // профиль получаем данные
-    // getUserInfo() {
-
-    // }
+    // профиль получаем данные
+    getUserInfo() {
+        return fetch(`${this._server}/users/me`, {
+            method: 'GET',
+            headers: {
+              authorization: this._headers,
+            }
+          })
+          .then(res => {
+            if (res.ok) {
+              return res.json();
+            }
+      
+            // если ошибка, отклоняем промис
+            return Promise.reject(`Ошибка: ${res.status}`);
+          });
+    }
     // // профиль изменить данные
     // setUserInfo() {
 

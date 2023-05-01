@@ -24,10 +24,11 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const avatarButton = document.querySelector('.profile__set-avatar')
 
-const editFormElement = document.querySelector('#edit-info');
-// const nameInput = editFormElement.querySelector('#name');
-// const jobInput = editFormElement.querySelector('#about');
+const userName = document.querySelector('.profile__name');
+const userAbout = document.querySelector('.profile__about');
+const userAvatar = document.querySelector('.profile__avatar');
 
+const editFormElement = document.querySelector('#edit-info');
 const addFormElement = document.querySelector('#add-place');
 const avatarFormElement = document.querySelector('#set-avatar');
 const deleteFormElement = document.querySelector('#delete-form');
@@ -52,6 +53,16 @@ const userInfo = new UserInfo({
   name: '.profile__name',
   about: '.profile__about   '
 });
+
+function setServerUserInfo() {
+  api.getUserInfo()
+  .then((result) => {
+    userName.textContent = result.name;
+    userAbout.textContent = result.about;
+    userAvatar.src = result.avatar;
+  })
+}
+setServerUserInfo();
 
 // попап редактирования профиля
 const popupWithEditForm = new PopupWithForm(popupEdit,
