@@ -25,3 +25,20 @@ class PopupWithConfirmation extends Popup {
 }
 
 export default PopupWithConfirmation;
+
+// // Класс PopupWithConfirmation - представляет всплывающее окно с подтверждением
+// class PopupWithConfirmation extends Popup {
+//     constructor(popupSelector, handleConfirmation) {
+//       super(popupSelector);
+//       this._confirmationButton = this._popupElement.querySelector('.popup__confirmation-button');
+//       this._handleConfirmation = handleConfirmation;
+//     }
+  
+//     setEventListeners() {
+//       super.setEventListeners();
+  
+//       this._confirmationButton.addEventListener('click', () => {
+//         this._handleConfirmation();
+//       });
+//     }
+//   }

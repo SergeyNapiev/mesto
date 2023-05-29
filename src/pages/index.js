@@ -114,16 +114,50 @@ function handleDeleteClick(item) {
 }
 
 // создание секции карточек
-api.getInitialCards()
-  .then((result) => {
-    const cardZone = new Section({
-      items: result,
-      renderer}, container);
+// api.getInitialCards()
+//   .then((result) => {
+//     console.log(result);
+//     const cardZone = new Section({
+//       items: result,
+//       renderer: (item) => {
+//         console.log(item);
+//         const card = createCard(item);
+
+//         console.log(card);
+//         cardZone.addItem(card.generateCard());
+//       },
+//       container});
+//     cardZone.renderItems();
+//   })
+//   .catch((err) => {
+//     console.log(err); // выведем ошибку в консоль
+// }); 
+
+// создание новой карточки
+function createCard(item) {
+  const card = new Card(item, templateSelector, handleCardClick, handleDeleteClick);
+  const newCard = card.generateCard(item);
+  return newCard;
+};
+
+// создание секции
+const cardZone = new Section({
+  items: [],
+  renderer: (item) => {
+    const card = createCard(item);
+    cardZone.addItem(card);
+    },
+  },
+  container);
+
+  api.getInitialCards()
+  .then((data) => {
+    cardZone.items = data;
     cardZone.renderItems();
   })
-  .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-}); 
+  .catch((error) => {
+    console.error(error);
+  });  
 
 // попап добавления новой карточки
 const popupWithAddForm = new PopupWithForm(
@@ -139,16 +173,11 @@ const popupWithAddForm = new PopupWithForm(
   }
 );
 
-// создание новой карточки
-function createCard(item) {
-  const card = new Card(item, templateSelector, handleCardClick, handleDeleteClick);
-  const newCard = card.generateCard(item);
-  return newCard;
-};
 
-const renderer = (item) => {
-  container.prepend(createCard(item));
-};
+
+// const renderer = (item) => {
+//   container.prepend(createCard(item));
+// };
 
 popupWithAddForm.setEventListeners();
 

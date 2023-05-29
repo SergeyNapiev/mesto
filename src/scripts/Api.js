@@ -23,7 +23,7 @@ class Api {
     } 
         // новая карточка
 
-        addNewCard(item) {
+        addCard(item) {
             return fetch(`${this._server}/cards`, {
                 method: 'POST',
                 headers: {
@@ -44,10 +44,25 @@ class Api {
                 return Promise.reject(`Ошибка: ${res.status}`);
               });
         }
-    // // удалить карточку
-    // deleteCard() {
+    // удалить карточку
+    removeCard(item) {
+      return fetch(`${this._server}/cards/${item}`, {
+        method: 'DELETE',
+        headers: {
+            authorization: this._headers,
+            'Content-Type': 'application/json'
+        },
+      })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
 
-    // }
+      // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+    };
+
     // // поставить лайк
     // likeCard() {
 
@@ -122,3 +137,92 @@ class Api {
 
 
   export default Api;
+
+//   // Класс Api - представляет интерфейс для взаимодействия с сервером
+// class Api {
+//   constructor(options) {
+//     this._baseUrl = options.baseUrl;
+//     this._headers = options.headers;
+//   }
+
+//   _checkResponse(res) {
+//     if (res.ok) {
+//       return res.json();
+//     }
+
+//     return Promise.reject(`Ошибка: ${res.status}`);
+//   }
+
+//   getUserInfo() {
+//     return fetch(`${this._baseUrl}/users/me`, {
+//       headers: this._headers,
+//     })
+//       .then(this._checkResponse);
+//   }
+
+//   setUserInfo({ name, about }) {
+//     return fetch(`${this._baseUrl}/users/me`, {
+//       method: 'PATCH',
+//       headers: this._headers,
+//       body: JSON.stringify({
+//         name: name,
+//         about: about,
+//       }),
+//     })
+//       .then(this._checkResponse);
+//   }
+
+//   setUserAvatar({ avatar }) {
+//     return fetch(`${this._baseUrl}/users/me/avatar`, {
+//       method: 'PATCH',
+//       headers: this._headers,
+//       body: JSON.stringify({
+//         avatar: avatar,
+//       }),
+//     })
+//       .then(this._checkResponse);
+//   }
+
+//   getInitialCards() {
+//     return fetch(`${this._baseUrl}/cards`, {
+//       headers: this._headers,
+//     })
+//       .then(this._checkResponse);
+//   }
+
+//   addCard({ name, link }) {
+//     return fetch(`${this._baseUrl}/cards`, {
+//       method: 'POST',
+//       headers: this._headers,
+//       body: JSON.stringify({
+//         name: name,
+//         link: link,
+//       }),
+//     })
+//       .then(this._checkResponse);
+//   }
+
+//   removeCard(cardId) {
+//     return fetch(`${this._baseUrl}/cards/${cardId}`, {
+//       method: 'DELETE',
+//       headers: this._headers,
+//     })
+//       .then(this._checkResponse);
+//   }
+
+//   likeCard(cardId) {
+//     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+//       method: 'PUT',
+//       headers: this._headers,
+//     })
+//       .then(this._checkResponse);
+//   }
+
+//   dislikeCard(cardId) {
+//     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+//       method: 'DELETE',
+//       headers: this._headers,
+//     })
+//       .then(this._checkResponse);
+//   }
+// }
