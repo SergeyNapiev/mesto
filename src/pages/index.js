@@ -105,33 +105,7 @@ popupWithAvatarForm.setEventListeners();
 const popupWithImage = new PopupWithImage(popupPhoto);
 popupWithImage.setEventListeners();
 
-function handleCardClick(name, link) {
-  popupWithImage.open(name, link);
-};
 
-function handleDeleteClick(item) {
-  popupConfirmation.open(item);
-}
-
-// создание секции карточек
-// api.getInitialCards()
-//   .then((result) => {
-//     console.log(result);
-//     const cardZone = new Section({
-//       items: result,
-//       renderer: (item) => {
-//         console.log(item);
-//         const card = createCard(item);
-
-//         console.log(card);
-//         cardZone.addItem(card.generateCard());
-//       },
-//       container});
-//     cardZone.renderItems();
-//   })
-//   .catch((err) => {
-//     console.log(err); // выведем ошибку в консоль
-// }); 
 
 // создание новой карточки
 function createCard(item) {
@@ -173,12 +147,6 @@ const popupWithAddForm = new PopupWithForm(
   }
 );
 
-
-
-// const renderer = (item) => {
-//   container.prepend(createCard(item));
-// };
-
 popupWithAddForm.setEventListeners();
 
 // попап подтверждения удаления
@@ -189,6 +157,25 @@ const popupConfirmation = new PopupWithConfirmation(popupConfirm,
 
   });
   popupConfirmation.setEventListeners();
+
+// // Обработчик подтверждения удаления карточки
+// function handleCardDeleteConfirmation() {
+//   const cardId = deleteCardPopup.getCardId();
+
+//   deleteCardPopup.setLoadingState(true);
+
+//   api.removeCard(cardId)
+//     .then(() => {
+//       deleteCardPopup.getCard().removeCard();
+//       deleteCardPopup.close();
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     })
+//     .finally(() => {
+//       deleteCardPopup.setLoadingState(false);
+//     });
+// }
 
 // открытие попап изменения данных профиля
 function handleOpenEditForm() {
@@ -208,6 +195,17 @@ function handleOpenAddForm() {
 function handleOpenAvetarForm() {
   avatarFormValidation.resetValidation();
   popupWithAvatarForm.open();
+}
+
+// открытие попапа большого фото
+function handleCardClick(name, link) {
+  popupWithImage.open(name, link);
+};
+
+// открытие попапа подтверждения удаления
+function handleDeleteClick(item) {
+  popupConfirmation.
+  popupConfirmation.open(item);
 }
 
 editButton.addEventListener('click', handleOpenEditForm);

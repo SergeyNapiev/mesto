@@ -23,7 +23,7 @@ class Api {
     } 
         // новая карточка
 
-        addCard(item) {
+        addNewCard(item) {
             return fetch(`${this._server}/cards`, {
                 method: 'POST',
                 headers: {
