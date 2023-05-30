@@ -45,8 +45,8 @@ class Api {
               });
         }
     // удалить карточку
-    removeCard(item) {
-      return fetch(`${this._server}/cards/${item}`, {
+    removeCardFromServer(id) {
+      return fetch(`${this._server}/cards/${id}`, {
         method: 'DELETE',
         headers: {
             authorization: this._headers,

@@ -57,12 +57,22 @@ const userInfo = new UserInfo({
 function setServerUserInfo() {
   api.getUserInfo()
   .then((result) => {
+    console.log(result);
     userName.textContent = result.name;
     userAbout.textContent = result.about;
     userAvatar.src = result.avatar;
   })
 }
 setServerUserInfo();
+
+// function getCurrentUserId() {
+//   api.getUserId()
+//   .then((result) => {
+//     console.log(result);
+//   })
+// }
+
+// getCurrentUserId();
 
 // попап редактирования профиля
 const popupWithEditForm = new PopupWithForm(popupEdit,
@@ -109,7 +119,26 @@ popupWithImage.setEventListeners();
 
 // создание новой карточки
 function createCard(item) {
-  const card = new Card(item, templateSelector, handleCardClick, handleDeleteClick);
+  const card = new Card(item, templateSelector, handleCardClick, 
+    () => {
+      // попап подтверждения удаления
+    const popupConfirmation = new PopupWithConfirmation(
+      popupConfirm, 
+      () => {
+        const cardId = card.getCardId();
+        api.removeCardFromServer(cardId)
+          .then((res) => {
+            console.log(res);
+            card.remove();
+            popupConfirmation.close();
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      });
+      popupConfirmation.open();
+      popupConfirmation.setEventListeners();
+    });
   const newCard = card.generateCard(item);
   return newCard;
 };
@@ -127,6 +156,7 @@ const cardZone = new Section({
   api.getInitialCards()
   .then((data) => {
     cardZone.items = data;
+    console.log(cardZone);
     cardZone.renderItems();
   })
   .catch((error) => {
@@ -138,8 +168,11 @@ const popupWithAddForm = new PopupWithForm(
   popupAdd,
   (item) => {
     api.addNewCard(item)
-    .then(result=> {
-      container.prepend(createCard(result));
+    .then((result)=> {
+      // container.addItem(createCard(result));
+      const card = createCard(result);
+      cardZone.addItem(card);
+      popupWithAddForm.close();
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
@@ -149,14 +182,7 @@ const popupWithAddForm = new PopupWithForm(
 
 popupWithAddForm.setEventListeners();
 
-// попап подтверждения удаления
-const popupConfirmation = new PopupWithConfirmation(popupConfirm, 
-  (item) => {
-    console.log(item);
-    cardZone.removeItem(item);
 
-  });
-  popupConfirmation.setEventListeners();
 
 // // Обработчик подтверждения удаления карточки
 // function handleCardDeleteConfirmation() {
@@ -202,11 +228,11 @@ function handleCardClick(name, link) {
   popupWithImage.open(name, link);
 };
 
-// открытие попапа подтверждения удаления
-function handleDeleteClick(item) {
-  popupConfirmation.
-  popupConfirmation.open(item);
-}
+// // открытие попапа подтверждения удаления
+// function handleDeleteClick(item) {
+//   console.log(item);
+//   popupConfirmation.open(item);
+// }
 
 editButton.addEventListener('click', handleOpenEditForm);
 addButton.addEventListener('click', handleOpenAddForm);

@@ -16,6 +16,11 @@ class UserInfo {
         this._about.textContent = about;
     }
 
+    getUserId(id) {
+        const userId = id;
+        return userId;
+    }
+
 }
 
 export default UserInfo;

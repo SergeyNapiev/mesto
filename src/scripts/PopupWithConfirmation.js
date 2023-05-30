@@ -10,7 +10,6 @@ class PopupWithConfirmation extends Popup {
 
     open(data) {
         super.open(data);
-        this._data = data.target.parentNode;
     }
 
     setEventListeners() {
