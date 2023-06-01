@@ -20,9 +20,3 @@ addItem(item) {
 }
 
 export default Section;
-
-// // Класс Section - представляет контейнер с карточками
-// class Section {
-
-//   }
-  

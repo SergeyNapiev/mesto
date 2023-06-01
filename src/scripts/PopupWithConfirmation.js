@@ -10,8 +10,10 @@ class PopupWithConfirmation extends Popup {
         this._startSubmitButtonText = this._submitButton.textContent;
     }
 
-    open(data) {
-        super.open(data);
+    open(cardData, cardId) {
+        super.open();
+        this.cardData = cardData;
+        this.cardId = cardId;
     }
 
     setLoadingState(isLoading, loadingMassage) {
@@ -26,7 +28,7 @@ class PopupWithConfirmation extends Popup {
         super.setEventListeners();
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this._handleFormSubmit(this._data);
+            this._handleFormSubmit(this.cardData, this.cardId);
             this.close();
         });
     }
@@ -34,20 +36,3 @@ class PopupWithConfirmation extends Popup {
 }
 
 export default PopupWithConfirmation;
-
-// // Класс PopupWithConfirmation - представляет всплывающее окно с подтверждением
-// class PopupWithConfirmation extends Popup {
-//     constructor(popupSelector, handleConfirmation) {
-//       super(popupSelector);
-//       this._confirmationButton = this._popupElement.querySelector('.popup__confirmation-button');
-//       this._handleConfirmation = handleConfirmation;
-//     }
-  
-//     setEventListeners() {
-//       super.setEventListeners();
-  
-//       this._confirmationButton.addEventListener('click', () => {
-//         this._handleConfirmation();
-//       });
-//     }
-//   }

@@ -82,8 +82,8 @@ class Card {
   _setEventListeners = () => {
       
 
-      this._buttonDeleteCard.addEventListener('click', (item) => {
-          this._handleDeleteClick(item);
+      this._buttonDeleteCard.addEventListener('click', () => {
+          this._handleDeleteClick(this);
       });
       this._buttonHeart.addEventListener('click', () => {
         this._handleLikeClick(this);
