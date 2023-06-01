@@ -23,6 +23,7 @@
 .elements__info{align-items:flex-start;display:flex;flex-direction:row;justify-content:space-between;margin:24px 15px 17px 21px}
 .elements__heart_active{background-image:url(img/heart-active.fe17a515669479b1e649.svg)}
 .elements__delete{background-color:transparent;background-image:url(img/Trash.ce3b64935accf9b8212e.svg);background-repeat:no-repeat;background-size:contain;border:none;display:flex;height:19px;padding:0;position:absolute;right:15px;top:18px;width:18px}.elements__delete:hover{cursor:pointer;opacity:.6}
+.elements__delete_none{display:none}
 .elements__button{background-color:#fff;border:none;cursor:pointer;margin:0;padding:0}
 .elements__container{align-content:center;display:flex;flex-direction:column;margin:0 5px 0 0;padding:-10px 0 0}
 .elements__counter{color:#000;font-family:Inter;font-size:13px;font-style:normal;font-weight:400;line-height:16px;margin:0;padding:0;text-align:center}
@@ -46,4 +47,4 @@
 .popup__error_visible{opacity:1}
 
 
-/*# sourceMappingURL=style.f6f5031dd6d155ece943.css.map*/
+/*# sourceMappingURL=style.903fa580a4e3035dfb8f.css.map*/

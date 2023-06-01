@@ -6,7 +6,7 @@ class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
     this._form = this._popupSelector.querySelector('.popup__form');
     this._inputList = this._form.querySelectorAll('.popup__input');
-    this._submitButton = this._form.querySelectorAll('.popup__button');
+    this._submitButton = this._form.querySelector('.popup__button');
     this._startSubmitButtonText = this._submitButton.textContent;
   }
 
@@ -24,11 +24,11 @@ class PopupWithForm extends Popup {
       });
     }
 
-    setLoadingState(isLoading) {
+    setLoadingState(isLoading, loadingMassage) {
       if (isLoading) {
-        this._submitButton.textContent = 'Сохранение...';
+        this._submitButton.textContent = loadingMassage;
       } else {
-        this._submitButton.textContent = this._initialSubmitButtonText;
+        this._submitButton.textContent = this._startSubmitButtonText;
       }
     }
 
@@ -49,48 +49,3 @@ class PopupWithForm extends Popup {
 }
 
 export default PopupWithForm;
-
-// // Класс PopupWithForm - представляет всплывающее окно с формой
-// class PopupWithForm extends Popup {
-//     constructor(popupSelector, handleFormSubmit) {
-//       super(popupSelector);
-//       this._formElement = this._popupElement.querySelector('.popup__form');
-//       this._handleFormSubmit = handleFormSubmit;
-//       this._submitButton = this._formElement.querySelector('.popup__submit-button');
-//       this._initialSubmitButtonText = this._submitButton.textContent;
-//     }
-  
-//     _getInputValues() {
-//       const inputList = Array.from(this._formElement.querySelectorAll('.popup__input'));
-//       const formValues = {};
-  
-//       inputList.forEach((input) => {
-//         formValues[input.name] = input.value;
-//       });
-  
-//       return formValues;
-//     }
-  
-//     setLoadingState(isLoading) {
-//       if (isLoading) {
-//         this._submitButton.textContent = 'Сохранение...';
-//       } else {
-//         this._submitButton.textContent = this._initialSubmitButtonText;
-//       }
-//     }
-  
-//     setEventListeners() {
-//       super.setEventListeners();
-  
-//       this._formElement.addEventListener('submit', (event) => {
-//         event.preventDefault();
-//         const formValues = this._getInputValues();
-//         this._handleFormSubmit(formValues);
-//       });
-//     }
-  
-//     close() {
-//       super.close();
-//       this._formElement.reset();
-//     }
-//   }
