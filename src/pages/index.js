@@ -96,7 +96,6 @@ popupWithEditForm.setEventListeners();
 const popupWithAvatarForm = new PopupWithForm(popupAvatar,
   (item) => {
     popupWithAvatarForm.setLoadingState(true, 'Сохранение...');
-      console.log(item);
       api.setNewAvatar(item)
       .then(result=> {
         result.avatar = item.link;
@@ -128,7 +127,7 @@ function handleLikeClick(card) {
         card.updateLikes(updatedCard.likes);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   } else {
     card.handleLikeCard();
@@ -137,7 +136,7 @@ function handleLikeClick(card) {
         card.updateLikes(updatedCard.likes);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   }
 }
@@ -153,13 +152,12 @@ function createCard(item) {
         popupConfirmation.setLoadingState(true, 'Удаление...');
         const cardId = card.getCardId();
         api.removeCardFromServer(cardId)
-          .then((res) => {
-            console.log(res);
+          .then(() => {
             card.remove();
             popupConfirmation.close();
           })
           .catch((error) => {
-            console.error(error);
+            console.log(error);
           })
           .finally(() => {
             popupConfirmation.setLoadingState(false)
@@ -210,7 +208,7 @@ const popupWithAddForm = new PopupWithForm(
       console.log(err); // выведем ошибку в консоль
   })
   .finally(() => {
-    popupAdd.setLoadingState(false)
+    popupWithAddForm.setLoadingState(false)
   });
   }
 );
